@@ -1,25 +1,29 @@
 import { useState } from "react"
 
 
+export default function App(){
 
-export default function(){
-   
-  const [val , setVal] = useState(false);
-  
+  //define object here:
+  const [person , setPerson] = useState({name : "Saurabh" , post : "Technical Specialist" ,status : false});
+
   const handleClick=()=>{
-    setVal((prev)=>{
-      return !prev;
-   })
- 
+
+       setPerson((prev)=>{
+          return {...prev , status : !prev.status}
+       })   
   }
 
-  let str = val ? "This is ture" : "This is false"
+  let str = person.status ? "Brilliant" : "Not brilliant"
+
   return(
     <>
-    <h2>useState demo-3</h2>
-    <h1>{str}</h1>
-    <button onClick ={handleClick}>Press to flip</button>
+     
+     <h1>{person.name}</h1>
+     <h1>{person.post}</h1>
+     <h1>{person.status}</h1>
+     
+     <button onClick={handleClick}>Click to flip state</button>
+     <h1>He is a {str} person</h1>
     </>
   )
-
 }
