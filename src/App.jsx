@@ -3,7 +3,7 @@
 export default function App() {
 
   
-  const ingredients = ["Apple" , "Guava" , "Orange"];
+  
 
 
   return (
