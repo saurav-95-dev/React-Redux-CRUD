@@ -1,19 +1,29 @@
-//useEffect;
-import React from "react"
-import MyComponent from "./components/MyComponent"
-import { useState , useEffect } from "react"
+//Immutaility in state (Arrays):
+
+import { useState } from "react"
 
 export default function App() {
-   
-  useEffect(() => {
-     console.log("useEffect is running .. ")
-  } , [])
- 
-  console.log("App component is rendered .. ")
+
+  const [item, setItem] = useState(["Apple", "orange", "guava"]);
+
+  function handleUpdate() {
+    console.log("handleUpdate function is running .. ")
+    //item.push("new item"); //Directly changing the array
+    setItem([...item, "new Item"]);
+  }
+
   return (
     <>
-      <MyComponent/>
+      
+      <ul>
+        {
+          item.map((fruits , index) => {
+            return <li key={index}>{ fruits}</li>
+          })
+        }
+      </ul>
+      <button onClick={handleUpdate}>Update</button>
+
     </>
-    
   )
 }
