@@ -13,7 +13,13 @@ export default function App() {
   } });
  
   function handleUpdate() {
-    setPerson({...person , name : "Something" , age : 0 , Qualifications : {...person.Qualifications , degree : "Mtech" , branch : "CS"}})
+    setPerson((prev) => {
+      const newPerson = JSON.parse(JSON.stringify(prev));
+      newPerson.name = "Something";
+      newPerson.age = 12345;
+      newPerson.Qualifications.branch = "CS"
+      return newPerson
+    })
   }
 
   return (
