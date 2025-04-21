@@ -10,7 +10,7 @@ export default function MyComponent(props) {
     return function () {
       console.log("My component wala useEffect Clean-up is running for count = ", props.count);
     }
-  })
+  } , [])
 
   
   return (
