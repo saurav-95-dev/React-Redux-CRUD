@@ -1,29 +1,29 @@
-import { useState } from "react"
+///Immutability in nested object
+
+import React , {useState} from "react"
 
 
 export default function App(){
+  
+  const [person , setPerson] = useState({name : "Saurabh" , age : 12 , qualification : {degree : "Btech" , Branch : "IT"}});
 
-  //define object here:
-  const [person , setPerson] = useState({name : "Saurabh" , post : "Technical Specialist" ,status : false});
-
-  const handleClick=()=>{
-
-       setPerson((prev)=>{
-          return {...prev , status : !prev.status}
-       })   
+  function handleUpdate(){
+    //let newPerson = JSON.parse(JSON.stringify(person));
+    
+    setPerson((prev)=>{
+       return {...prev , name : "New name" , age : 321, qualification  : {...prev.qualification , degree : "Arts" , Branch : "Commerce"}}
+    })
+   
+    
   }
-
-  let str = person.status ? "Brilliant" : "Not brilliant"
 
   return(
     <>
-     
-     <h1>{person.name}</h1>
-     <h1>{person.post}</h1>
-     <h1>{person.status}</h1>
-     
-     <button onClick={handleClick}>Click to flip state</button>
-     <h1>He is a {str} person</h1>
+    <h2>{person.name}</h2>
+    <h2>{person.age}</h2>
+    <h2>{person.qualification.degree}</h2>
+    <h2>{person.qualification.Branch}</h2>
+    <button onClick={handleUpdate}>Update</button>
     </>
   )
 }
