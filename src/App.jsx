@@ -8,7 +8,7 @@ export default function App(){
 
   useEffect(()=>{
      console.log("useEffect is running ...!")
-  },[])
+  },[count])
 
   function handleUpdate(){
       setCount((prev)=>{
