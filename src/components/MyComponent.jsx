@@ -1,23 +1,24 @@
+import React, { useEffect } from "react";
 
-import React from "react";
-import { useState , useEffect } from "react";
+export default function MyComponent(props) {
 
-export default function MyComponent() {
-    const [count, setCount] = useState(0);
+
+  useEffect(() => {
+
+    console.log("MyComponent wala useEffect is running for count = ", props.count);
+     
+    return function () {
+      console.log("My component wala useEffect Clean-up is running for count = ", props.count);
+    }
+  })
+
   
-    useEffect(() => {
-      console.log(`Effect runs for count = ${count}`);
-  
-      return () => {
-        console.log(`Cleanup runs for count = ${count}`);
-      };
-    }, [count]);
-  
-    return (
-      <>
-        <h2>Count: {count}</h2>
-        <button onClick={() => setCount(count + 1)}>Increment</button>
-      </>
-    );
-  }
-  
+  return (
+
+    <>
+      {console.log("MyComponent.jsx is rendered for count  = " , props.count)}
+      <h1>Count is : { props.count}</h1>
+    </>
+
+  )
+}

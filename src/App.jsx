@@ -1,37 +1,51 @@
-//immutability in state (in object)
+// --> Covered : Immutable States(Completed)
+// --> useEffect all 3 normal variations and 3 clean-up variations
+// --> Data fetch from an API in React
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import MyComponent from "./components/MyComponent";
+
 
 export default function App() {
 
-  const [person, setPerson] = useState({
-    name: "Saurabh", age: 12, add: "North pole", Qualifications: {
+  const [count, setCount] = useState(0);
+  const [visible, setVisible] = useState(true);
+  
+  //With only 1 argument : 
+  useEffect(() => {
 
-      degree: "Btech",
-      branch: "IT",
-      
-  } });
- 
+    console.log("App wala useEffect is running for count = ", count);
+    
+    return function () {
+      console.log("App wala Clean-up useEffect is running for count" , count);
+    }
+
+  })
+
   function handleUpdate() {
-    setPerson((prev) => {
-      const newPerson = JSON.parse(JSON.stringify(prev));
-      newPerson.name = "Something";
-      newPerson.age = 12345;
-      newPerson.Qualifications.branch = "CS"
-      return newPerson
+
+    setCount((prev) => {
+      return prev + 1;
+    })
+    
+  }
+
+  function handleBoolean() {
+    setVisible((prev) => {
+      return !prev;
     })
   }
 
   return (
+
     <>
-      <h1>{person.name}</h1>
-      <h1>{person.age}</h1>
-      <h1>{person.add}</h1>
-      <h1>{person.Qualifications.degree}</h1>
-      <h1>{person.Qualifications.branch}</h1>
-      
-      <button onClick={handleUpdate}>Update</button>
+      {console.log(" Mycomponent is rendered inside App.jsx for count = ", count)}
+      { console.log("App is also rendered becasue of MyComponent re-render")}
+      {visible ? <MyComponent handleUpdate={handleUpdate} count={count} /> : <>Nothing is here !</>}
+      <button onClick={handleUpdate}>Update</button> <br></br> <br></br>
+      <button onClick={handleBoolean}>Un-Mount</button>
     </>
     
   )
 }
+
