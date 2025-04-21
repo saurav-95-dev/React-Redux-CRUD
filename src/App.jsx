@@ -20,7 +20,7 @@ export default function App() {
       console.log("App wala Clean-up useEffect is running for count" , count);
     }
 
-  } , [])
+  } , [count])
 
   function handleUpdate() {
 
