@@ -1,26 +1,37 @@
-//useEffect 3 variations :
+//Fetching data from an API:
 
-import React , {useState , useEffect} from "react";
+import React , {useState , useEffect }from "react";
+import MyComponent from "./components/MyComponent";
+import getData from "./api";
 
 export default function App(){
-  
-  const [count ,  setCount] = useState(0);
+
+  const [userData , setUserData] = useState(null);
 
   useEffect(()=>{
-     console.log("useEffect is running ...!")
-  },[count])
+     getData().then((data)=>{
+         
+         setUserData(data.results[0]);
+     })
+  },[]) //Run as componentDidMount and component-unmount , It dont run on component state update
 
-  function handleUpdate(){
-      setCount((prev)=>{
-        return prev + 1;
-      })
+  function handleRefresh (){
+     getData().then((data)=>{
+        setUserData(data.results[0])
+     })
   }
 
+
   return(
+
     <>
-    {console.log("App component is rendered...")}
-     <h1>{count}</h1>
-     <button onClick={handleUpdate}>Update</button>
+
+    {userData ?  <MyComponent userData = {userData}/> : <>Pls Wait...</>}
+    <br></br><br></br>
+    <button className="refresh-btn" onClick={handleRefresh}>Refresh</button>
+     
     </>
+
   )
+
 }
