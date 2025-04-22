@@ -1,30 +1,27 @@
-
-import React , {useEffect} from "react";
-
+import React, { useState } from "react";
 
 export default function MyComponent(props){
-    
-    console.log(props.userData);
 
-    useEffect(()=>{
-       console.log("MyComponent wala useEffect is running");
-       return function cleanUser(){
-        console.log("MyComponent wala Clean-up is running....")
-      }
-    },[])
+    const [visibility , setVisibility] = useState(false);
+
+    console.log(props.children)
+
+    function handleVisibility(){
+        setVisibility((prev)=>{
+           return !prev;
+        })
+    }
+
     return(
 
         <>
-        <div className = "user-card">
-
-            <h2>{props.userData.gender}</h2>
-            <h2>{props.userData.name.first} {props.userData.name.last}</h2>
-            <h2>{props.userData.location.city} ,{props.userData.location.state} , {props.userData.location.country}</h2>
-            <h3>{props.userData.email}</h3>
-            <img src= {props.userData.picture.medium} alt="no picture available" />
-        </div>
+         <button onClick={handleVisibility}>Reveal</button>
+         <ul>
+         {visibility ? React.Children.map(props.children , (child , index)=>{
+            return <li key={index}>{child}</li>
+         }) : <></>}
+         </ul>
         </>
 
     )
-
 }
