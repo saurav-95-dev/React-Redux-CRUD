@@ -1,36 +1,52 @@
-//Fetching data from an API ---> Completed
-//Everything about props ---> 
-// Everything about useMemo Hook --->  
+// Everything about useMemo Hook --->   
+// Everything about useCallback --->
 
-import React, { useState } from "react";
-import MyComponent from "./components/MyComponent";
+import React, { useMemo, useState } from "react";
 
-export default function App(){
+export default function App() {
+  const [number, setNumber] = useState(0);
+  const [count, setCount] = useState(0);
 
-  const [toggle , setToggle] = useState(false);
+  // Simulating an expensive calculation
+  const expensiveTask = (num) => {
+    console.log("Calculating expensive task...");
+    for (let i = 0; i < 1000000000; i++) {} // Simulate a delay
+    return num * 2;
+  };
+
+  // Memoizing the expensive calculation based on 'number'
+  const memoizedResult = useMemo(() => {
+    console.log("Expensive task is being recalculated...");
+    return expensiveTask(number); // Only recompute when 'number' changes
+  }, [number]); // The expensive task is only recomputed when 'number' changes
+
   
-  function handleToggle(){
-     setToggle((prev)=>{
-       return !prev
-     })
+  // Handlers for count and number input
+  function handleCountClick() {
+    console.log("Count button clicked");
+    setCount((prev) => prev + 1); // Increment count (this will not affect the expensive calculation)
+  }
+
+  function handleInputChange(event) {
+    setNumber(event.target.value); // Update the input number
   }
 
   return (
-
     <>
-     <h2>This is just a public content . <br></br>Click below button to reveal the main content</h2>
-     
-     <br></br>
-     <button onClick={handleToggle}>ON</button>
-    {toggle ?  <MyComponent >
-      <h2>This is a secret content</h2>
-      <h2>This is what i was waiting for</h2>
-      <h2>My time is going to come soon...</h2>
-      <h2>I will make it happen anyhow..</h2>
-    
-    </MyComponent> : <></>}
+      {console.log("App rendered..")}
+      <h1>Count: {count}</h1>
+      <button onClick={handleCountClick}>Increment Count</button>
+      
+      <div>
+        <h2>Input Number for Expensive Calculation:</h2>
+        <input
+          type="number"
+          value={number}
+          onChange={handleInputChange}
+          placeholder="Enter a number"
+        />
+        <h3>Memoized Expensive Result: {memoizedResult}</h3>
+      </div>
     </>
-
-  )
-
+  );
 }
