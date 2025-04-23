@@ -1,10 +1,15 @@
 // ChildComponent.js
 import React from "react";
 
-// ChildComponent wrapped with React.memo to prevent unnecessary re-renders
-const ChildComponent = React.memo(({ memoizedValue }) => {
+const ChildComponent = React.memo(({data})=>{
   console.log("ChildComponent rendered...");
-  return <h2>Memoized Value: {memoizedValue}</h2>;
-});
+  return (
+    <div>
+      <h3>Memoized Object</h3>
+      <p>Name: {data.name}</p>
+      <p>Age: {data.age}</p>
+    </div>
+  );
+})
 
-export default ChildComponent;
+export default ChildComponent

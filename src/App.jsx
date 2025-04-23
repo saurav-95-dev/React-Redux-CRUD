@@ -6,21 +6,15 @@ import ChildComponent from "./components/ChildComponent";
 
 
 // Parent component
-export default function App() {
+export default function ParentComponent() {
   const [count, setCount] = useState(0);  // State that updates frequently
-  const [number, setNumber] = useState(0); // The number that influences the calculation
+  const [name, setName] = useState("Alice"); // Name that can be changed
+  const [age, setAge] = useState(25); // Age that can be changed
 
-  // Expensive function to simulate a heavy calculation
-  const expensiveCalculation = (num) => {
-    console.log("Calculating expensive task...");
-    for (let i = 0; i < 1000000000; i++) {} // Simulate delay
-    return num * 2;
-  };
-
-  // Memoize the result of the expensive calculation, only recalculating when 'number' changes
-  const memoizedResult = useMemo(() => {
-    return expensiveCalculation(number); // Only recompute when 'number' changes
-  }, [number]);
+  // Memoize the object so its reference only changes when 'name' or 'age' changes
+  const memoizedObject = useMemo(() => {
+    return { name, age }; // Return the object with name and age
+  }, [name, age]); // Object is only recalculated when 'name' or 'age' changes
 
   return (
     <div>
@@ -29,16 +23,23 @@ export default function App() {
       <button onClick={() => setCount(count + 1)}>Increment Count</button>
 
       <div>
-        <h2>Input Number for Calculation:</h2>
+        <h2>Change Name and Age:</h2>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter Name"
+        />
         <input
           type="number"
-          value={number}
-          onChange={(e) => setNumber(parseInt(e.target.value))}
+          value={age}
+          onChange={(e) => setAge(Number(e.target.value))}
+          placeholder="Enter Age"
         />
       </div>
 
-      {/* Pass the memoized result to the child */}
-      <ChildComponent memoizedValue={memoizedResult} />
+      {/* Pass the memoized object to the child */}
+      <ChildComponent data={memoizedObject} />
     </div>
   );
 }
