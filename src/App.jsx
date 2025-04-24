@@ -12,9 +12,11 @@ export default function ParentComponent() {
   const [age, setAge] = useState(25); // Age that can be changed
 
   // Memoize the object so its reference only changes when 'name' or 'age' changes
-  const memoizedObject = function (){
-    return { name, age };
-  }
+  const memoizedObject = useMemo(() => {
+  
+    return { name, age }; // Return the object with name and age
+  }, [name, age]); // Object is only recalculated when 'name' or 'age' changes
+
   return (
     <div>
       {console.log("ParentComponent rendered...")}
