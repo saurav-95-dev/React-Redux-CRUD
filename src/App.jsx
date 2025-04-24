@@ -1,68 +1,46 @@
-import React, { useState, useMemo } from 'react';
+//useMemo : 1 --> Using to avoid unecessary calculations.(Via counter and input):
 
-// TodoApp Component
-export default function TodoApp() {
-  // State to keep track of the task input and the list of tasks
-  const [taskInput, setTaskInput] = useState('');
-  const [tasks, setTasks] = useState([]);
+// Everything about useMemo Hook --->   
+// Everything about useCallback --->
 
-  // Function to add a new task
-  const addTask = () => {
-    if (taskInput.trim()) {
-      setTasks([...tasks, { id: tasks.length + 1, text: taskInput, completed: false }]);
-      setTaskInput(''); // Reset input field after adding the task
-    }
-  };
+import React, { useMemo, useState } from "react";
 
-  // Function to toggle completion status of a task
-  const toggleCompletion = (taskId) => {
-    setTasks(tasks.map(task => 
-      task.id === taskId ? { ...task, completed: !task.completed } : task
-    ));
-  };
+export default function App(){
 
-  // Expensive calculation: Filter completed tasks (we'll memoize this)
-  const completedTasks = useMemo(() => {
-    console.log('Filtering completed tasks...');
-    return tasks.filter(task => task.completed);
-  }, [tasks]); // Recalculate only when the `tasks` array changes
+  const [count , setCount] = useState(0);
+  const [number , setNumber ] = useState(0);
+  
+  function expensiveTask(num){
+     for(let i=0;i<100000000;i++){
+
+     }
+     console.log("Inside expensive task function")
+     return num*2;
+  }
+
+  const memoisedResult = useMemo(()=>{
+    return expensiveTask(number)
+  }, [number])
+
+  function handleCountClick(){
+    console.log("Count is clicked")
+     setCount((prev)=>{
+        return prev+1;
+     })
+  }
+
+  function handleInput(e){
+      console.log("Input value changed:", e.target.value)
+      setNumber(e.target.value)
+  }
 
   return (
-    <div>
-      <h1>To-Do App</h1>
-
-      {/* Task input and add button */}
-      <div>
-        <input
-          type="text"
-          value={taskInput}
-          onChange={(e) => setTaskInput(e.target.value)}
-          placeholder="Enter a task"
-        />
-        <button onClick={addTask}>Add Task</button>
-      </div>
-
-      {/* List of tasks */}
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <span
-              style={{ textDecoration: task.completed ? 'line-through' : 'none' }}
-              onClick={() => toggleCompletion(task.id)}
-            >
-              {task.text}
-            </span>
-          </li>
-        ))}
-      </ul>
-
-      {/* Show filtered completed tasks */}
-      <h3>Completed Tasks:</h3>
-      <ul>
-        {completedTasks.map((task) => (
-          <li key={task.id}>{task.text}</li>
-        ))}
-      </ul>
-    </div>
-  );
+    <>
+    {console.log("App is rendered")}
+    <h2>Count : {count}</h2>
+    <button onClick={handleCountClick}>Click</button>
+    <input type="number" placeholder="Enter number" onChange={handleInput} />
+    <h3>Doubled value of input integer is : {memoisedResult}</h3>
+    </>
+  )
 }
