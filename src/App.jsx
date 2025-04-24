@@ -1,50 +1,43 @@
-//useMemo : 2 --> Preventing unecessary re-rendering of child components via React.memo !
+// Everything about useMemo Hook --->   
+// Everything about useCallback --->
 
-import React, {useMemo, useState } from "react";
-import ChildComponent from "./components/ChildComponent"
+import React, { useState, useMemo } from "react";
+import ChildComponent from "./components/ChildComponent";
 
-export default function App(){
-  
-  const [count , setCount] = useState(0);
-  const [number  , setNumber] = useState(0);
 
-  function expensiveTask(number){
-    console.log("Inside expensiveTask function..");
+// Parent component
+export default function ParentComponent() {
+  const [count, setCount] = useState(0);  // State that updates frequently
+  const [name, setName] = useState("Alice"); // Name that can be changed
+  const [age, setAge] = useState(25); // Age that can be changed
 
-    return number*number;
-
+  // Memoize the object so its reference only changes when 'name' or 'age' changes
+  const memoizedObject = function (){
+    return { name, age };
   }
+  return (
+    <div>
+      {console.log("ParentComponent rendered...")}
+      <h1>Count: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment Count</button>
 
-  const result = useMemo(()=>{
-    console.log("Calling expensive function inside useMemo...")
-    return expensiveTask(number);
-    
-  },[number])
+      <div>
+        <h2>Change Name and Age:</h2>
+        <input
+          type="text"
+        
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter Name"
+        />
+        <input
+          type="number"
+          onChange={(e) => setAge(Number(e.target.value))}
+          placeholder="Enter Age"
+        />
+      </div>
 
-
-
-  function handleCountClick(){
-    console.log("Incerment button is clicked..")
-     setCount((prev)=>{
-       return prev+1;
-     })
-
-  }
-  
-  function handleInput(e){
-    setNumber(e.target.value);
-    console.log("Current input value: ",e.target.value);
-  }
-
-  return(
-    <>
-      {console.log("App component is rendered..")}
-     <h2>count : {count}</h2>
-     <button onClick={handleCountClick}>Increment</button>
-     <br></br><br></br>
-     <input type="number" placeholder="Enter number" onChange={handleInput} />
-     <ChildComponent result = {result}/>
-    </>
-
-  )
+      {/* Pass the memoized object to the child */}
+      <ChildComponent data={memoizedObject} />
+    </div>
+  );
 }
