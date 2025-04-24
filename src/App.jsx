@@ -1,46 +1,46 @@
-//useMemo : 1 --> Using to avoid unecessary calculations.(Via counter and input):
+//useMemo : 2 --> Preventing unecessary re-rendering of child components via React.memo !
 
-// Everything about useMemo Hook --->   
-// Everything about useCallback --->
-
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
+import ChildComponent from "./components/ChildComponent"
 
 export default function App(){
-
-  const [count , setCount] = useState(0);
-  const [number , setNumber ] = useState(0);
   
-  function expensiveTask(num){
-     for(let i=0;i<100000000;i++){
+  const [count , setCount] = useState(0);
+  const [number  , setNumber] = useState(0);
 
-     }
-     console.log("Inside expensive task function")
-     return num*2;
+  function expensiveTask(number){
+    console.log("Inside expensiveTask function..");
+
+    return number*number;
+
   }
 
-  const memoisedResult = useMemo(()=>{
-    return expensiveTask(number)
-  }, [number])
+  const result = expensiveTask(number);
+
+
 
   function handleCountClick(){
-    console.log("Count is clicked")
+    console.log("Incerment button is clicked..")
      setCount((prev)=>{
-        return prev+1;
+       return prev+1;
      })
-  }
 
+  }
+  
   function handleInput(e){
-      console.log("Input value changed:", e.target.value)
-      setNumber(e.target.value)
+    setNumber(e.target.value);
+    console.log("Current input value: ",e.target.value);
   }
 
-  return (
+  return(
     <>
-    {console.log("App is rendered")}
-    <h2>Count : {count}</h2>
-    <button onClick={handleCountClick}>Click</button>
-    <input type="number" placeholder="Enter number" onChange={handleInput} />
-    <h3>Doubled value of input integer is : {memoisedResult}</h3>
+      {console.log("App component is rendered..")}
+     <h2>count : {count}</h2>
+     <button onClick={handleCountClick}>Increment</button>
+     <br></br><br></br>
+     <input type="number" placeholder="Enter number" onChange={handleInput} />
+     <ChildComponent result = {result}/>
     </>
+
   )
 }
