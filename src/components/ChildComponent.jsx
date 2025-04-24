@@ -1,11 +1,12 @@
 import React from "react";
 
-export default function ChildComponent({result}){
-  return(
-    <>
-     <h2>This is a child component</h2>
-     {console.log("Child component is rendered ..")}
-     <h2>Square of the number that has been input : {result}</h2>
-    </>
-  )
-}
+const ChildComponent = React.memo(({result})=>{
+   return(
+      <>
+      {console.log("ChildComponent is rendered ..")}
+      <h2>Square of numner that has been input is : {result}</h2>
+      </>
+   )
+})
+
+export default ChildComponent;

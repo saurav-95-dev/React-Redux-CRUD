@@ -1,6 +1,6 @@
 //useMemo : 2 --> Preventing unecessary re-rendering of child components via React.memo !
 
-import React, { useState } from "react";
+import React, {useMemo, useState } from "react";
 import ChildComponent from "./components/ChildComponent"
 
 export default function App(){
@@ -15,7 +15,11 @@ export default function App(){
 
   }
 
-  const result = expensiveTask(number);
+  const result = useMemo(()=>{
+    console.log("Calling expensive function inside useMemo...")
+    return expensiveTask(number);
+    
+  },[number])
 
 
 
