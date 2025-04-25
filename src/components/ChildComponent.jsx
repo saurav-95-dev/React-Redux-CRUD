@@ -1,15 +1,17 @@
-// ChildComponent.js
-import React from "react";
+import React, { useEffect } from "react";
 
-const ChildComponent = React.memo(({data})=>{
-  console.log("ChildComponent rendered...");
-  return (
-    <div>
-      <h3>Memoized Object</h3>
-      <p>Name: {data.name}</p>
-      <p>Age: {data.age}</p>
-    </div>
-  );
+// export default function ChildComponent({ onClick }){
+//   console.log("Child rendered");
+//   return <button onClick={onClick}>Increment</button>;
+// };
+
+const ChildComponent = React.memo(({onClick})=>{
+  console.log("Child component ...");
+  return(
+    <>
+    <button onClick={onClick}>Increment</button>
+    </>
+  )
 })
 
-export default ChildComponent
+export default ChildComponent;
