@@ -2,25 +2,33 @@ import React ,{useCallback, useState} from "react";
 import ChildComponent from "./components/ChildComponent";
 
 export default function App() {
-  const [count, setCount] = useState(0);
-  const [number , setNumber] = useState(0);
 
-  const handleClick = useCallback(()=>{
-       setCount((prev)=>{
-        return prev+1;
-       })
-  } , [count , number])
+  const [items, setItems] = useState(["Item 1", "Item 2", "Item 3" , "Item 4"]);
+  const [filter, setFilter] = useState("");
 
-  function handleInput(e){
-      setNumber(e.target.value);
-  }
+  // Memoizing the delete function to prevent unnecessary re-renders
+  const handleDelete = useCallback((itemToDelete) => {
+    console.log("Delete function is executing ... !")
+    setItems((items)=>{
+      return items.filter(item => item !== itemToDelete)
+    });
+  }, [items]);
 
   return (
     <div>
-      {console.log("App rendered for count = " , {count})}
-      <input type="text" placeholder="Enter number" onChange={handleInput} />
-      <ChildComponent onClick={handleClick} />
-      <p>{count}</p>
+      <input 
+        type="text" 
+        placeholder="Filter items"
+        onChange={(e) => setFilter(e.target.value)} 
+      />
+      <br></br>
+      <br></br>
+      {items 
+        .filter(item => item.includes(filter))
+        .map((item, index) => (
+          <ChildComponent key={index} item={item} onClick={handleDelete} />
+        ))
+      }
     </div>
   );
-};
+}
