@@ -1,34 +1,29 @@
-import React ,{useCallback, useState} from "react";
-import ChildComponent from "./components/ChildComponent";
+import React, { useState, useCallback, useEffect } from 'react';
 
 export default function App() {
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("John");
 
-  const [items, setItems] = useState(["Item 1", "Item 2", "Item 3" , "Item 4"]);
-  const [filter, setFilter] = useState("");
+  const handleClick = useCallback(() => {
+    console.log("Calling memoised handling function bcuz u changed count just now !")
+    setCount(count + 1);
+  }, [count]);
 
-  // Memoizing the delete function to prevent unnecessary re-renders
-  const handleDelete = useCallback((itemToDelete) => {
-    console.log("Delete function is executing ... !")
-    setItems((items)=>{
-      return items.filter(item => item !== itemToDelete)
-    });
-  }, [items]);
+  useEffect(() => {
+    console.log('Effect triggered');
+  }, [handleClick]);
+
+  function handleInput(e){
+    console.log("Current input" , e.target.value)
+    setName(e.target.value);
+  }
 
   return (
     <div>
-      <input 
-        type="text" 
-        placeholder="Filter items"
-        onChange={(e) => setFilter(e.target.value)} 
-      />
-      <br></br>
-      <br></br>
-      {items 
-        .filter(item => item.includes(filter))
-        .map((item, index) => (
-          <ChildComponent key={index} item={item} onClick={handleDelete} />
-        ))
-      }
+      {console.log("App rendered...")}
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increment</button>
+      <input type="text" placeholder='Enter here' onChange={handleInput} />
     </div>
   );
 }
