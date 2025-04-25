@@ -9,7 +9,7 @@ export default function App() {
        setCount((prev)=>{
         return prev+1;
        })
-  } , [count])
+  } , [])
 
   function handleInput(e){
       setNumber(e.target.value);
@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <div>
-      {console.log("App rendered")}
+      {console.log("App rendered for count = " , {count})}
       <input type="text" placeholder="Enter number" onChange={handleInput} />
       <ChildComponent onClick={handleClick} />
       <p>{count}</p>
