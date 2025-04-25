@@ -9,7 +9,7 @@ export default function App() {
        setCount((prev)=>{
         return prev+1;
        })
-  } , [])
+  } , [count , number])
 
   function handleInput(e){
       setNumber(e.target.value);
