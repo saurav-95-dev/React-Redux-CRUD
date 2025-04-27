@@ -1,71 +1,22 @@
-<<<<<<< HEAD
-//useRef  : 
-//Click counter
-
-import React , {useState , useRef} from "react";
-=======
-import React, { useState, useCallback, useEffect } from 'react';
->>>>>>> 87e38d4ffbf2d5bf5fc444a2dea97ca1975cd20a
+import { useRef, useEffect, useState } from "react";
 
 export default function App() {
   const [count, setCount] = useState(0);
-<<<<<<< HEAD
-
-  let a = useRef(3);
-
-  function handleClick() {
-    setCount((prev) => {
-      return prev + 1;
-    })
-    console.log("count track:", count);
-   
-  }
-
-  function handleForUseRef() {
-    a.current++;
-    alert(`value of a is ${a.current}`);
-
-=======
-  const [name, setName] = useState("John");
-
-  const handleClick = useCallback(() => {
-    console.log("Calling memoised handling function bcuz u changed count just now !")
-    setCount(count + 1);
-  }, [count]);
+  const prevCountRef = useRef();
 
   useEffect(() => {
-    console.log('Effect triggered');
-  }, [handleClick]);
+   
+    prevCountRef.current = count;
+    console.log("Use Effect ran and has set prevCountRef value .. " , count)
+  }, [count]);
 
-  function handleInput(e){
-    console.log("Current input" , e.target.value)
-    setName(e.target.value);
->>>>>>> 87e38d4ffbf2d5bf5fc444a2dea97ca1975cd20a
-  }
-
-
-  
   return (
-<<<<<<< HEAD
-
     <>
-      {console.log("App component is re-rendering..")}
-      <h2>Count : { count}</h2>
-      <button onClick={handleClick}>Click here</button>    
-      <br></br><br></br>
-      <button onClick={handleForUseRef}>Click to change a : </button>
-      <h2>Value of a : { a.current}</h2>
+      {console.log("App is re-rendering and printing prevCountRef and current count")}
+      <h1>Current Count: {count}</h1>
+      <h2>Previous Count: {prevCountRef.current}</h2>
+
+      <button onClick={() => setCount(count + 1)}>Increment</button>
     </>
-    
-  )
-}
-=======
-    <div>
-      {console.log("App rendered...")}
-      <p>Count: {count}</p>
-      <button onClick={handleClick}>Increment</button>
-      <input type="text" placeholder='Enter here' onChange={handleInput} />
-    </div>
   );
 }
->>>>>>> 87e38d4ffbf2d5bf5fc444a2dea97ca1975cd20a
