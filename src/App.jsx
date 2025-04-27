@@ -1,22 +1,31 @@
-import { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 
 export default function App() {
+  
+  const btn = useRef();
   const [count, setCount] = useState(0);
-  const prevCountRef = useRef();
 
-  useEffect(() => {
+  function handleClick() {
    
-    prevCountRef.current = count;
-    console.log("Use Effect ran and has set prevCountRef value .. " , count)
-  }, [count]);
+    setCount((prev) => {
+      return prev + 1;
+    })
+  }
+
+  if (btn.current) {
+    btn.current.style.backgroundColor = "red";
+
+  }
+  
+  
+  
 
   return (
     <>
-      {console.log("App is re-rendering and printing prevCountRef and current count")}
-      <h1>Current Count: {count}</h1>
-      <h2>Previous Count: {prevCountRef.current}</h2>
-
-      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <h2>count :{ count} </h2>
+      <button onClick={handleClick}  ref={ btn}>Increment</button>
+      <button onClick ={()=>{btn.current.style.display = "none"}}>Vanish increment</button>
+      
     </>
-  );
+  )
 }
