@@ -1,29 +1,26 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React from "react";
+import ChildComponent from "./components/ChildComponent";
+import { useContext } from "react";
+import { context } from "./context/Counter";
 
-export default function App() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState("John");
+export default function App(){
+  const contextBucket = useContext(context);
+  console.log(contextBucket);
 
-  const handleClick = useCallback(() => {
-    console.log("Calling memoised handling function bcuz u changed count just now !")
-    setCount(count + 1);
-  }, [count]);
+  return(
+    <>
+    <h2>Count : {contextBucket.count}</h2>
+    <ChildComponent/>
+    <br />
+    <br />
+    <ChildComponent/><br />
+    <br />
+    <ChildComponent/><br />
+    <br />
+    <ChildComponent/>
 
-  useEffect(() => {
-    console.log('Effect triggered');
-  }, [handleClick]);
+    </>
 
-  function handleInput(e){
-    console.log("Current input" , e.target.value)
-    setName(e.target.value);
-  }
+  )
 
-  return (
-    <div>
-      {console.log("App rendered...")}
-      <p>Count: {count}</p>
-      <button onClick={handleClick}>Increment</button>
-      <input type="text" placeholder='Enter here' onChange={handleInput} />
-    </div>
-  );
 }

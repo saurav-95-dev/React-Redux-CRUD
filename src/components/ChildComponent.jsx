@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useContext } from "react";
+import { context } from "../context/Counter";
 
+export default function ChildComponent(){
+    const contextBucket = useContext(context);
 
-const ChildComponent = React.memo(( {item , onClick})=>{
-  console.log('ListItem re-rendered');
-  return (
-    <div>
-      <span>{item} </span>
-      <button onClick={() => onClick(item)}> Delete</button>
-      <br></br> <br></br> <br></br>
-    </div>
-  )
-})
+    return(
+       <>
+       <button onClick={()=>{contextBucket.setCount(contextBucket.count+1)}}>Increment</button> 
 
-export default ChildComponent
+       <button onClick={()=>{contextBucket.setCount(contextBucket.count - 1)}}>Decrement</button>
+       </>
+    )
+
+}
