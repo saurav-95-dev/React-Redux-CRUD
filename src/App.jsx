@@ -6,6 +6,7 @@ export default function App(){
 
     const [count , setCount ] = useState(0);
     let btn = useRef()
+    let a = useRef(0);
 
     function handleClick(){
       a.current = a.current+1;
@@ -13,6 +14,9 @@ export default function App(){
       setCount((prev)=>{
         return prev+1;
       })
+      if(btn.current){
+        btn.current.style.backgroundColor = "green";
+      }
     }
 
 
