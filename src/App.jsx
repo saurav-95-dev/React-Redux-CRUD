@@ -1,23 +1,25 @@
-import React from "react";
-import Item from "./components/Item";
-import Cart from "./components/Cart";
-import { useContext } from "react";
-import { context } from "./context/Cart";
+import React, { useState  , useRef} from "react";
 
 export default function App(){
 
-  const contextBucket = useContext(context);
-  console.log(contextBucket)
+    //useRef : 
+
+    const [count , setCount ] = useState(0);
+    let a = useRef(0);
+    function handleClick(){
+      a.current = a.current+1;
+      console.log("val of a:",a)
+      setCount((prev)=>{
+        return prev+1;
+      })
+    }
+
 
     return(
 
       <>
-        <Item name="Mackbook" price = {10000}/>
-        <Item name="Keyboard" price = {700}/>
-        <Item name="Mouse" price = {100}/>
-        <Item name="Egg Roll" price = {18000}/>
-        <Cart/>
-        
+      <h3>Count : {count}</h3>
+      <button onClick={handleClick}>Increment</button>    
       </>
 
     )
