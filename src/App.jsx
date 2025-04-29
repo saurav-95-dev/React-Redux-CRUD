@@ -1,8 +1,7 @@
 import React from "react";
 import {Routes , Route} from "react-router-dom";
-import Account from "./components/Account";
-import Profile from "./components/Profile";
-import Details from "./components/Details";
+
+import Home from "./components/Home.jsx";
 
 
 export default function App(){
@@ -12,14 +11,7 @@ export default function App(){
     <>
    
     <Routes>
-      <Route path="/account" element={<Account/>}/>
-      <Route path="/account/profile" element={<Profile/>}/>
-      <Route path="/account/profile/details" element={<Details/>}/>
-      <Route path="account">
-          <Route path="profile" element={<Profile/>}/>
-          <Route path ="details" element={<Details/>}/>
-
-      </Route>
+       <Route path="/user/:userId" element={<Home/>}/>
     </Routes>
     </>
 
