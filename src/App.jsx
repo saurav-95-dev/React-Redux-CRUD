@@ -1,33 +1,23 @@
-import React, { useState  , useRef, useEffect} from "react";
+import React from "react";
+import {Routes , Route} from "react-router-dom";
+import Account from "./components/Account";
+import Profile from "./components/Profile";
+import Details from "./components/Details";
+
 
 export default function App(){
 
-    //useRef : DOM-Manipulation : 
+  return(
 
-    const [count , setCount ] = useState(0);
-    let prevCount = useRef();
+    <>
+   
+    <Routes>
+      <Route path="/account" element={<Account/>}/>
+      <Route path="/account/profile" element={<Profile/>}/>
+      <Route path="/account/profile/details" element={<Details/>}/>
+    </Routes>
+    </>
 
-    useEffect(()=>{
-        prevCount.current = count;
-    },[count])
-
-    function handleClick(){
-  
-      setCount((prev)=>{
-        return prev+1;
-      })
-     
-    }
-
-
-    return(
-
-      <>
-      <h3>Count : {count}</h3>
-      <button onClick={handleClick}>Increment</button>  
-       <h3>Previous count : {prevCount.current}</h3>
-      </>
-
-    )
+  )
 
 }
