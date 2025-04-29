@@ -15,6 +15,11 @@ export default function App(){
       <Route path="/account" element={<Account/>}/>
       <Route path="/account/profile" element={<Profile/>}/>
       <Route path="/account/profile/details" element={<Details/>}/>
+      <Route path="account">
+          <Route path="profile" element={<Profile/>}/>
+          <Route path ="details" element={<Details/>}/>
+
+      </Route>
     </Routes>
     </>
 
