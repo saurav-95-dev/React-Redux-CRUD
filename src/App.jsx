@@ -1,9 +1,7 @@
-//React-router-dom: 
 import React from "react";
-import {Routes, Route} from "react-router-dom"
+import {Routes , Route} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/Home";
-import Account from "./components/Account";
-import Profile from "./components/Profile";
 
 
 export default function App(){
@@ -11,14 +9,13 @@ export default function App(){
   return(
 
     <>
-       
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/post/:postId" element={<Profile/>}/>
-        
-      </Routes>
-       
-
+    <div className="main-container">
+    <h1>Meme Generator</h1>
+    <Routes>
+      <Route path="/" element={<Home/>}/>
+    </Routes>
+    </div>
+      
     </>
 
   )

@@ -1,29 +1,25 @@
-import React , {useEffect , useState} from "react"
-import { NavLink } from "react-router-dom";
-
+import React  , {useEffect, useState} from "react";
+import MemeCard from "./Card";
+import { getAllMemes } from "../api/meme";
 
 export default function Home(){
     
-    const [post , setPost] = useState([]);
+    const [data , setData] = useState([]);
 
     useEffect(()=>{
-        fetch("https://jsonplaceholder.typicode.com/posts").
-        then((data)=>{return data.json()}).
-        then((data)=>{return setPost(data)
-        })
-    },[])
+       getAllMemes().then((memes)=>{return setData(memes.data.memes)})
+    },[]);
+
 
     return(
         <>
-        <h2>This is home page of site</h2>
-        <br />
-       
-        {
-           post ?  post.map((post , index)=>{return <NavLink style={{display : "block"}} key={index} to= {`/post/${post.id}`} >{post.title}</NavLink>}) : <h3>Loading...</h3>
+          <div className="row">
+          {
+            data.map((el , index)=>{
+                return <MemeCard image = {el.url} name = {el.name}/>
+            })
         }
-
-                
-
+          </div>
         </>
     )
 }
