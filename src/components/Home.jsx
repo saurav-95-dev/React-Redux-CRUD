@@ -13,10 +13,10 @@ export default function Home(){
 
     return(
         <>
-          <div className="row">
+          <div className="row" >
           {
             data.map((el , index)=>{
-                return <MemeCard image = {el.url} name = {el.name}/>
+                return <MemeCard image = {el.url} name = {el.name} key = {index}/>
             })
         }
           </div>
