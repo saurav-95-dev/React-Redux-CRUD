@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useSearchParams , NavLink } from "react-router-dom";
+import React , {useEffect , useState} from "react"
+import { NavLink } from "react-router-dom";
+
 
 export default function Home(){
-    const params = useParams();
-    console.log(params);
-
+    
     const [post , setPost] = useState([]);
 
-
     useEffect(()=>{
-       fetch('https://jsonplaceholder.typicode.com/posts')
-       .then((data)=>{return data.json()})
-       .then((data)=>{return setPost(data)})
+        fetch("https://jsonplaceholder.typicode.com/posts").
+        then((data)=>{return data.json()}).
+        then((data)=>{return setPost(data)
+        })
     },[])
 
     return(
-
         <>
-        <h2>This is a small blogging site</h2>
+        <h2>This is home page of site</h2>
+        <br />
+       
         {
-            post.map((post , index)=>{return <NavLink to={`/post/${post.id}`} style={{display : "block"}} key={index}>{post.title}</NavLink>})
+           post ?  post.map((post , index)=>{return <NavLink style={{display : "block"}} key={index} to= {`/post/${post.id}`} >{post.title}</NavLink>}) : <h3>Loading...</h3>
         }
+
+                
+
         </>
-
     )
-
 }

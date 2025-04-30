@@ -1,8 +1,9 @@
+//React-router-dom: 
 import React from "react";
-import {Routes , Route} from "react-router-dom";
-
-import Home from "./components/Home.jsx";
-import Profile from "./components/Profile.jsx";
+import {Routes, Route} from "react-router-dom"
+import Home from "./components/Home";
+import Account from "./components/Account";
+import Profile from "./components/Profile";
 
 
 export default function App(){
@@ -10,11 +11,14 @@ export default function App(){
   return(
 
     <>
-     <Routes>
-      
+       
+      <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/post/:postId" element={<Profile/>}/>
-     </Routes>
+        
+      </Routes>
+       
+
     </>
 
   )
