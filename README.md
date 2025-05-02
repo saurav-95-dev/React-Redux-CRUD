@@ -4,6 +4,8 @@
 
 ## --> ARCHITECTURE : 
 
+## --> CONCEPT OF PAYLOAD: 
+
 ## --> 
 
 
