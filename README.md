@@ -2,4 +2,8 @@
 
 ## Concepts of React-Redux-Toolkit
 
+## --> ARCHITECTURE : 
+
+## --> 
+
 
