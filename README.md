@@ -12,6 +12,9 @@
 
 ## --> FIREBASE-FIRESTORE -- CRUD functionality 
 
+## --> JAVASCRIPT DEEP REVIEW
+
+
 
 
 
