@@ -17,6 +17,15 @@
 ## --> React Project driven 8 hrs . 
 
 
+### DSA :
+
+--> Linked-List .
+--> Recursion . 
+--> Strings 
+--> Sorting Algorithms 
+
+
+
 
 
 
