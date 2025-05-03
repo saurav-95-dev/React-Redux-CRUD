@@ -14,7 +14,7 @@
 
 ## --> JAVASCRIPT DEEP REVIEW
 
-## --> Advanced Javasript interview questions
+## --> React Project driven 8 hrs . 
 
 
 
