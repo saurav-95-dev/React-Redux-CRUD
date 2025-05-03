@@ -1,12 +1,17 @@
-### React-Stage2 : (March-Phase)
+### React-Stage2 : (May-Phase)
 
-## Concepts of React-Redux-Toolkit : 
+## CONCEPT OF REDUX-TOOLKIT : 
 
-## --> ARCHITECTURE : 
+## --> ARCHITECTURE and CONCEPT: 
 
-## --> CONCEPT OF PAYLOAD : 
+## --> CONCEPT OF PAYLOAD 
 
-## --> 
+## --> REDUX THUNK
+
+## --> FIREBASE Authentication
+
+## --> FIREBASE-FIRESTORE -- CRUD functionality 
+
 
 
 
