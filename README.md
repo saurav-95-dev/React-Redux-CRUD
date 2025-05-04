@@ -23,6 +23,7 @@
 --> Recursion . 
 --> Strings 
 --> Sorting Algorithms 
+--> stack 
 
 ### SYSTEM DESIGN : 
 
