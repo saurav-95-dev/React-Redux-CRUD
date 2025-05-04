@@ -23,8 +23,9 @@
 --> Recursion . 
 --> Strings 
 --> Sorting Algorithms 
---> stack 
+--> Stack 
 --> Queue
+--> OOPS Concepts
 
 ### SYSTEM DESIGN : 
 
