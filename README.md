@@ -24,6 +24,7 @@
 --> Strings 
 --> Sorting Algorithms 
 --> stack 
+--> Queue
 
 ### SYSTEM DESIGN : 
 
