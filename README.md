@@ -12,8 +12,6 @@
 
 ## --> FIREBASE-FIRESTORE -- CRUD functionality 
 
-## --> JAVASCRIPT DEEP REVIEW
-
 ## --> React Project driven 8 hrs progress --> Current = 0 hrs
 
 
