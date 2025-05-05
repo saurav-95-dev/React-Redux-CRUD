@@ -3,25 +3,31 @@ import { createSlice } from "@reduxjs/toolkit";
 export const counterSlice = createSlice({
 
     name : "saurabh" ,
+
     initialState :{
-        value : 0
+        value : 10
     },
+
     reducers:{
+
         increment : (state)=>{
             state.value = state.value + 1;
         } ,
         decrement : (state)=>{
             state.value = state.value - 1;
         } ,
+        reset : (state)=>{
+            state.value=0;
+        },
         incrementByAmount : (state , action)=>{
             state.value = state.value + action.payload;
-        }
-        
+        },
+       
     }
 
 })
 
 
-export const {increment , decrement , incrementByAmount} = counterSlice.actions
+export const {increment , decrement , incrementByAmount , reset} = counterSlice.actions
 
 export default counterSlice.reducer;
