@@ -1,10 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit"
-import saurabhReducer from "../feature/Counter/Counter.jsx"
+import {todoReducer} from "../feature/Todo/Todo.jsx";
+
 
 export const store = configureStore({
-
-    reducer : {
-       saurabh : saurabhReducer
+    reducers : {
+       todo : todoReducer,
     },
-
 })
