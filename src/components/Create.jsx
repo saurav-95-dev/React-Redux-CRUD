@@ -18,6 +18,18 @@ export default function Create(){
     <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
     <label class="form-check-label" for="exampleCheck1">Check me out</label>
   </div>
+  <div class="mb-3">
+  <input class="form-check-input" type="radio" />
+  <label class="form-check-label" for="radioDefault1">
+    Male
+  </label>
+</div>
+<div class="mb-3">
+  <input class="form-check-input" type="radio" />
+  <label class="form-check-label" for="radioDefault2">
+    Female
+  </label>
+</div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
        </div>
