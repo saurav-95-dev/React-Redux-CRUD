@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import Navbar from "./components/Navbar.jsx";
 
 
 export default function App(){
@@ -7,7 +7,7 @@ export default function App(){
     return(
 
         <>
-         <h1>Hello</h1>
+         <Navbar/>
         </>
 
     )
