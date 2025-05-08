@@ -1,37 +1,58 @@
-import React from "react";
+import React ,{useState} from "react";
+
 
 export default function Create(){ 
 
+    const [users , setUsers] = useState({});
+
+    
+   
+      
+    const getUserData=(e)=>{
+      setUsers({...users , [e.target.name] : e.target.value});
+      console.log(users);
+  }
+  
+  const dispatch = useDispatch();
+
+  function handleSubmit(){
+    dispatch()
+  }
+
+    
+
+
     return( 
        <div>
-        <form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1"/>
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <div class="mb-3">
-  <input class="form-check-input" type="radio" />
-  <label class="form-check-label" for="radioDefault1">
-    Male
-  </label>
-</div>
-<div class="mb-3">
-  <input class="form-check-input" type="radio" />
-  <label class="form-check-label" for="radioDefault2">
-    Female
-  </label>
-</div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+        <label className="form-label">Name</label>
+        <input type="email" className="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp" onChange={getUserData}/>
+       
+        </div>
+        <div className="mb-3">
+        <label for="exampleInputPassword1" className="form-label">Email Address</label>
+        <input type="password" className="form-control" name="email" id="exampleInputPassword1"  onChange={getUserData}/>
+        </div>
+        <div className="mb-3">
+        <label for="exampleInputPassword1" className="form-label">Age</label>
+        <input type="password" className="form-control" name="age" id="exampleInputPassword1"  onChange={getUserData}/>
+        </div>
+      
+        <div className="mb-3">
+        <input className="form-check-input" type="radio" name="gender" value="Male"  onChange={getUserData}/>
+        <label className="form-check-label" for="radioDefault1">
+                Male
+        </label>
+        </div>
+        <div className="mb-3">
+        <input className="form-check-input" type="radio" name="gender" value="Female"  onChange={getUserData}/>
+        <label className="form-check-label" for="radioDefault2">
+                Female
+        </label>
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
        </div>
     )
 }
