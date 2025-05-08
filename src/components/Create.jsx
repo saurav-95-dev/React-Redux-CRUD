@@ -1,5 +1,6 @@
 import React ,{useState} from "react";
-import {useDispatch} from "react-redux"
+import {useDispatch} from "react-redux";
+import { createUser } from "../features/userDetailsSlice";
 
 export default function Create(){ 
 
@@ -16,7 +17,7 @@ export default function Create(){
   const dispatch = useDispatch();
 
   function handleSubmit(){
-    dispatch()
+    dispatch(createUser)
   }
 
     
