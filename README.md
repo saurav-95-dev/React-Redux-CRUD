@@ -1,18 +1,18 @@
 ### React-Stage2 : (May-Phase)
 
-## CONCEPT OF REDUX-TOOLKIT : 
+## CONCEPT OF REDUX-TOOLKIT : -> Completed
 
-## --> ARCHITECTURE and CONCEPT: 
+## --> ARCHITECTURE and CONCEPT: -> Completed 
 
-## --> CONCEPT OF PAYLOAD 
+## --> CONCEPT OF PAYLOAD -> Completed 
 
-## --> REDUX THUNK
+## --> REDUX THUNK -> Completed
 
-## --> FIREBASE Authentication
+## --> FIREBASE Authentication 
 
 ## --> FIREBASE-FIRESTORE -- CRUD functionality 
 
-## --> React Project driven 8 hrs progress --> Current = 0 hrs
+## --> React-Redux Project progress --> done for 7 May , 2025 
 
 
 ### DSA :
