@@ -34,6 +34,21 @@ export const userDetails = createSlice({
         error : null,
         
     },
+    extraReducers : {
+        [createUser.pending] : (state)=>{
+            state.loading = true;
+            state.users.push(isAction.payload);
+        } ,
+        
+        [createUser.fulfilled] : (state , action)=>{
+           state.loading = false;
+           state.users.push(action.payload);
+        } ,
+        [createUser.rejected] : (state , action)=>{
+            state.loading = false;
+            state.error = action.payload.message;
+        },
+    }
 
 })
 export default userDetails.reducer;
