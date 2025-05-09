@@ -8,11 +8,13 @@
 
 ## --> REDUX THUNK -> Completed
 
-## --> FIREBASE Authentication 
+## --> FIREBASE Authentication --> PENDING...
 
-## --> FIREBASE-FIRESTORE -- CRUD functionality 
+## --> FIREBASE-FIRESTORE -- CRUD functionality --> PENDING ..
 
-## --> React-Redux Project progress --> done for 7 May , 2025 
+## --> React-Redux Project progress --> 53 mins done for 9 May , 2025 
+
+## --> React-revision concepts learnt 
 
 
 ### DSA :
