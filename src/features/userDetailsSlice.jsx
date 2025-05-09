@@ -18,7 +18,7 @@ export const createUser = createAsyncThunk("createUser", async (data, { rejectWi
         const result = await response.json();
         return result;
     } catch (error) {
-        return rejectWithValue(error.message);
+        return rejectWithValue(error);  // send full error
     }
 });
 
@@ -30,19 +30,20 @@ export const userDetails = createSlice({
         loading: false,
         error: null,
     },
-    extraReducers: {
-        [createUser.pending]: (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        [createUser.fulfilled]: (state, action) => {
-            state.loading = false;
-            state.users.push(action.payload);
-        },
-        [createUser.rejected]: (state, action) => {
-            state.loading = false;
-            state.error = action.payload || "Something went wrong";
-        },
+    extraReducers: (builder) => {
+        builder
+            .addCase(createUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(createUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users = [...state.users, action.payload];  // immutable update
+            })
+            .addCase(createUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload?.message || "Something went wrong"; // use action.payload if it's an error object
+            });
     },
 });
 
