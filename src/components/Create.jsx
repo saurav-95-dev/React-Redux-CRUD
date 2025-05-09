@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser } from "../features/userDetailsSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() { 
     const [users, setUsers] = useState({});
+    
+  const navigate = useNavigate()
+
+
 
     const getUserData = (e) => {
         setUsers({ ...users, [e.target.name]: e.target.value });
@@ -14,7 +19,9 @@ export default function Create() {
 
     function handleSubmit(e) {
         e.preventDefault();  // Prevent page reload on form submit
+        console.log("users" , users);
         dispatch(createUser(users));  // Pass user data to the action
+        navigate("/read")
     }
 
     return( 
