@@ -25,7 +25,12 @@ export default function Read(){
                 <div className="card-body">
                 <h5 className="card-title">{ele.name}</h5>
                 <p className="card-text">{ele.email}</p>
-                <a href="#" className="btn btn-primary">Go somewhere</a>
+                <p className="card-text">{ele.age}</p>
+                <p className="card-text">{ele.gender}</p>
+                <a href="">View</a><br />
+                <a href="">Edit</a><br />
+                <a href="">Delete</a><br />
+                {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
                 </div>
                 </div>
             })
