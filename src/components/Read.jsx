@@ -2,45 +2,39 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { showUser } from "../features/userDetailsSlice";
 
-export default function Read(){ 
+export default function Read() {
     const dispatch = useDispatch();
-    const {users , loading} = useSelector((state)=>state.userDetail);
+    const { users, loading } = useSelector((state) => state.userDetail);
 
-    useEffect(()=>{
-       dispatch(showUser())
-    },[])
+    useEffect(() => {
+        dispatch(showUser())
+    }, [])
     
-    if(loading)
-    {
+    if (loading) {
         return <h2>lOADING</h2>
     }
-    return(
-
-        <>
-         <h2>All data </h2>
-         {
-            users && users.map((ele)=>{
-                return   <div className="card" style={{ width: "18rem" }}>
-                <img src="..." className="card-img-top" alt="..." />
-                <div className="card-body">
-                <h5 className="card-title">{ele.name}</h5>
-                <p className="card-text">{ele.email}</p>
-                <p className="card-text">{ele.age}</p>
-                <p className="card-text">{ele.gender}</p>
-                <a href="">View</a><br />
-                <a href="">Edit</a><br />
-                <a href="">Delete</a><br />
-                {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
-                </div>
-                </div>
-            })
-           
-
-         }
-        
-
-        </>
-
-    )
-
-}
+    return (
+        <div className="container my-4">
+            <h2 className="text-center mb-4">All Users</h2>
+            <div className="row g-4">
+                {users && users.map((ele, index) => (
+                    <div key={index} className="col-12 col-sm-6 col-md-4">
+                        <div className="card h-100">
+                            <div className="card-body">
+                                <h5 className="card-title">{ele.name}</h5>
+                                <p className="card-text">Email: {ele.email}</p>
+                                <p className="card-text">Age: {ele.age}</p>
+                                <p className="card-text">Gender: {ele.gender}</p>
+                                <div className="d-flex flex-column gap-2">
+                                    <a href="#" className="btn btn-outline-info">View</a>
+                                    <a href="#" className="btn btn-outline-warning">Edit</a>
+                                    <a href="#" className="btn btn-outline-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}      
