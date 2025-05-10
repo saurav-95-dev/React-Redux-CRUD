@@ -24,70 +24,42 @@ export default function Create() {
         navigate("/read")
     }
 
-    return( 
-       <div>
-        <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-                <label className="form-label" htmlFor="name">Name</label>
-                <input 
-                    type="text" 
-                    className="form-control" 
-                    name="name" 
-                    id="name" 
-                    onChange={getUserData}
-                />
+    return (
+        <div className="container my-4">
+          <h2 className="mb-4 text-center">Create User</h2>
+          <form onSubmit={handleSubmit} className="row g-3">
+            <div className="col-md-6">
+              <label htmlFor="name" className="form-label">Name</label>
+              <input type="text" className="form-control" name="name" id="name" onChange={getUserData} />
             </div>
-
-            <div className="mb-3">
-                <label className="form-label" htmlFor="email">Email Address</label>
-                <input 
-                    type="email" 
-                    className="form-control" 
-                    name="email" 
-                    id="email" 
-                    onChange={getUserData}
-                />
+      
+            <div className="col-md-6">
+              <label htmlFor="email" className="form-label">Email Address</label>
+              <input type="email" className="form-control" name="email" id="email" onChange={getUserData} />
             </div>
-
-            <div className="mb-3">
-                <label className="form-label" htmlFor="age">Age</label>
-                <input 
-                    type="number" 
-                    className="form-control" 
-                    name="age" 
-                    id="age" 
-                    onChange={getUserData}
-                />
+      
+            <div className="col-md-6">
+              <label htmlFor="age" className="form-label">Age</label>
+              <input type="number" className="form-control" name="age" id="age" onChange={getUserData} />
             </div>
-
-            <div className="mb-3">
-                <input 
-                    className="form-check-input" 
-                    type="radio" 
-                    name="gender" 
-                    value="Male" 
-                    onChange={getUserData}
-                />
-                <label className="form-check-label" htmlFor="genderMale">
-                    Male
-                </label>
+      
+            <div className="col-md-6">
+              <label className="form-label d-block">Gender</label>
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="gender" value="Male" onChange={getUserData} />
+                <label className="form-check-label">Male</label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="gender" value="Female" onChange={getUserData} />
+                <label className="form-check-label">Female</label>
+              </div>
             </div>
-
-            <div className="mb-3">
-                <input 
-                    className="form-check-input" 
-                    type="radio" 
-                    name="gender" 
-                    value="Female" 
-                    onChange={getUserData}
-                />
-                <label className="form-check-label" htmlFor="genderFemale">
-                    Female
-                </label>
+      
+            <div className="col-12 text-center">
+              <button type="submit" className="btn btn-primary mt-2 px-5">Submit</button>
             </div>
-
-            <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
-       </div>
-    );
+          </form>
+        </div>
+      );
+      
 }
