@@ -14,7 +14,7 @@
 
 ## --> React-Redux Project progress --> 53 mins done for 9 May , 2025 
 
-## --> React-revision concepts learnt 
+## --> React-revision concepts learnt (For the months of May)
 
 
 ### DSA :
@@ -27,10 +27,7 @@ Month - 1 , May-2025
 --> Stack 
 --> OOPS Concepts
 
-
-### SYSTEM DESIGN : 
-
---> System design basics .
+### Devops Progress : (May - 2025)
 
 
 
