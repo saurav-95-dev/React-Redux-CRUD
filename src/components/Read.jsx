@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { showUser } from "../features/userDetailsSlice";
+import CustomModal from "./CustomModal";
 
 export default function Read() {
     const dispatch = useDispatch();
@@ -15,6 +16,7 @@ export default function Read() {
     }
     return (
         <div className="container my-4">
+            <CustomModal/>
             <h2 className="text-center mb-4">All Users</h2>
             <div className="row g-4">
                 {users && users.map((ele, index) => (
