@@ -20,7 +20,7 @@ export default function Read() {
     }
     return (
         <div className="container my-4">
-          { showPopup &&  <CustomModal/>}
+          { showPopup &&  <CustomModal id={id} showPopup={showPopup} setShowPopup={setShowPopup}/>}
             <h2 className="text-center mb-4">All Users</h2>
             <div className="row g-4">
                 {users && users.map((ele, index) => (
