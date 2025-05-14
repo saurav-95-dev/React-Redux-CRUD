@@ -34,7 +34,7 @@ export default function Read() {
                                 <div className="d-flex flex-column gap-2">
                                     <button href="#" className="btn btn-outline-info" onClick={()=>[setId(ele.id) , setShowPopup(true)]}>View</button>
                                     <Link href="#" className="btn btn-outline-warning">Edit</Link>
-                                    <Link href="#" className="btn btn-outline-danger">Delete</Link>
+                                    <Link onClick={()=>{dispatch(deleteUser(ele.id))}} className="btn btn-outline-danger">Delete</Link>
                                 </div>
                             </div>
                         </div>
