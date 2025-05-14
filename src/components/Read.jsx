@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { showUser } from "../features/userDetailsSlice";
 import CustomModal from "./CustomModal";
+import { Link } from 'react-router';
+import { deleteUser } from "../features/userDetailsSlice";
 
 export default function Read() {
     const dispatch = useDispatch();

@@ -38,6 +38,22 @@ export const showUser = createAsyncThunk("showUser", async (_, { rejectWithValue
     }
 });
 
+// Delete action : 
+export const deleteUser = createAsyncThunk("deleteUser", async (id , { rejectWithValue }) => {
+    try {
+        const response = await fetch(`https://681b0fce17018fe50579cc14.mockapi.io/crud-NIC/${id}` , {method : "DELETE"});
+        
+        if (!response.ok) {
+            throw new Error("Failed to fetch users");
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        return rejectWithValue(error);
+    }
+});
+
 // Slice
 export const userDetails = createSlice({
     name: "userDetail",
@@ -71,7 +87,24 @@ export const userDetails = createSlice({
             .addCase(showUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload?.message || "Something went wrong"; // use action.payload if it's an error object
+            })
+             .addCase(deleteUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(deleteUser.fulfilled, (state, action) => {
+                state.loading = false;
+                const {id} = action.payload;
+                if(id){
+                    state.users = state.users.filter((ele)=>ele.id !==id);
+                }
+            })
+            .addCase(deleteUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload?.message || "Something went wrong"; // use action.payload if it's an error object
             });
+
+
     },
 });
 
