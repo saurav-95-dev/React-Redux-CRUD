@@ -19,15 +19,17 @@
 
 ### DSA :
 Month - 1 , May-2025
+
 --> Strings(Revision)
 
 --> Linked-List .
 --> Recursion . 
 --> Sorting Algorithms 
 --> Stack 
---> OOPS Concepts
+--> OOPS Concepts.
 
-### Devops Progress : (May - 2025)
+
+### Devops Progress : (May - 2025):
 
 
 
