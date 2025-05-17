@@ -25,11 +25,11 @@ Month - 1 , May - 18 , 2025.
 --> Linked-List .
 --> Recursion . 
 --> Sorting Algorithms 
---> Stack 
 --> OOPS Concepts.
 
+--> React-Redux CRUD Application + React basic interview question revision 
 
-### Devops Progress : (May - 2025):
+
 
 
 
