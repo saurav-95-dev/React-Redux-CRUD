@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 
@@ -6,7 +6,13 @@ const Update = () => {
 
     //Capturing the id from the URL using useParams:
     const { id } = useParams();
-
+    const {users , loading } = useSelector((state) => state.userDetail.users);
+      const singleUser = allUsers.find((user) => user.id === id);
+    
+    useEffect(() => {
+        
+    }, []);
+    
   
 
   return (
