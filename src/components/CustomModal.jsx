@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import { X } from "lucide-react";
 
 const CustomModal = ({ id, showPopup, setShowPopup }) => {
+  
   const allUsers = useSelector((state) => state.userDetail.users);
-  const singleUser = allUsers.find((user) => user.id === id);
+  const singleUser = allUsers.filter((user) => user.id === id);
 
   // Close modal on escape key press
   useEffect(() => {
