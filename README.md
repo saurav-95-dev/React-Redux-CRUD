@@ -20,11 +20,8 @@
 ### DSA :
 Month - 1 , May - 18 , 2025.
 
---> Strings(Revision)
-
 --> Linked-List .
 --> Recursion . 
---> Sorting Algorithms 
 --> OOPS Concepts.
 
 --> React-Redux CRUD Application + React basic interview question/Concepts revision 
