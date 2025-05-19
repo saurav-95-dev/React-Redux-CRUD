@@ -15,7 +15,7 @@ const Update = () => {
     useEffect(() => {
         if (id) {
             const singleUser = users.filter((ele) => ele.id === id);
-            setUpdateData(singleUser);
+            setUpdateData(singleUser[0]);
         }
     }, []);
 
@@ -33,7 +33,7 @@ const Update = () => {
             type="text"
             name="name"
             className = "form-control"
-            value={updateData[0].name}
+            value={updateData && updateData.name}
            
           />
         </div>
@@ -43,7 +43,7 @@ const Update = () => {
             type="email"
             name="email"
             className="form-control"
-            value={updateData[0].email}
+            value={updateData && updateData.email}
         
           />
         </div>
@@ -53,7 +53,7 @@ const Update = () => {
             type="text"
             name="age"
             className="form-control"
-            value={updateData[0].age}
+            value={updateData && updateData.age}
             
           />
         </div>
@@ -63,7 +63,7 @@ const Update = () => {
             name="gender"
             value="Male"
             type="radio"
-            
+            checked={updateData && updateData.gender==='Male'}
            
           />
           <label className="form-check-label">Male</label>
@@ -74,6 +74,7 @@ const Update = () => {
             name="gender"
             value="Female"
             type="radio"
+            checked={updateData && updateData.gender==='Female'}
            
           />
           <label className="form-check-label">Female</label>
