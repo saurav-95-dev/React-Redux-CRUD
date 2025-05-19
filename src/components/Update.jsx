@@ -33,6 +33,7 @@ const Update = () => {
             type="text"
             name="name"
             className = "form-control"
+            value={updateData[0].name}
            
           />
         </div>
@@ -42,6 +43,7 @@ const Update = () => {
             type="email"
             name="email"
             className="form-control"
+            value={updateData[0].email}
         
           />
         </div>
@@ -51,6 +53,7 @@ const Update = () => {
             type="text"
             name="age"
             className="form-control"
+            value={updateData[0].age}
             
           />
         </div>
@@ -60,6 +63,7 @@ const Update = () => {
             name="gender"
             value="Male"
             type="radio"
+            
            
           />
           <label className="form-check-label">Male</label>
