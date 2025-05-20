@@ -6,7 +6,7 @@ import { updateUser } from "../features/userDetailsSlice";
 
 
 const Update = () => {
-
+  
   const dispatch = useDispatch();
 
     //capturing the id from the URL using useParams:
@@ -26,7 +26,9 @@ const Update = () => {
 ;
 
     const newData=(e)=>{
-      setUpdateData({...updateData , [e.target.name]:e.target.value})
+
+      setUpdateData({...updateData , [e.target.name]:e.target.value});
+
     }
     
     console.log(updateData)
