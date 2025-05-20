@@ -6,20 +6,26 @@ import { CircleSlash } from "lucide-react";
 
 const Update = () => {
 
-    //Capturing the id from the URL using useParams:
+    //capturing the id from the URL using useParams:
     const { id } = useParams();
-    const [updateData, setUpdateData] = useState();
-
-    const {users , loading } = useSelector((state) => state.userDetail);
     
+    const [updateData, setUpdateData] = useState();
+ 
+    const {users , loading } = useSelector((state) => state.userDetail);    
+
     useEffect(() => {
         if (id) {
             const singleUser = users.filter((ele) => ele.id === id);
             setUpdateData(singleUser[0]);
         }
     }, []);
+;
 
-    console.log(updateData);
+    const newData=(e)=>{
+      setUpdateData({...updateData , [e.target.name]:e.target.value})
+    }
+    
+    console.log(updateData)
 
   
 
@@ -34,7 +40,7 @@ const Update = () => {
             name="name"
             className = "form-control"
             value={updateData && updateData.name}
-           
+            onChange={newData}
           />
         </div>
         <div className="mb-3">
@@ -44,6 +50,7 @@ const Update = () => {
             name="email"
             className="form-control"
             value={updateData && updateData.email}
+            onChange={newData}
         
           />
         </div>
@@ -54,6 +61,7 @@ const Update = () => {
             name="age"
             className="form-control"
             value={updateData && updateData.age}
+            onChange={newData}
             
           />
         </div>
@@ -64,6 +72,7 @@ const Update = () => {
             value="Male"
             type="radio"
             checked={updateData && updateData.gender==='Male'}
+             onChange={newData}
            
           />
           <label className="form-check-label">Male</label>
@@ -75,6 +84,7 @@ const Update = () => {
             value="Female"
             type="radio"
             checked={updateData && updateData.gender==='Female'}
+             onChange={newData}
            
           />
           <label className="form-check-label">Female</label>

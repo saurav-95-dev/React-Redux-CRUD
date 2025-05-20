@@ -18,7 +18,7 @@ export default function Read() {
     }, [])
     
     if (loading) {
-        return <h2>lOADING</h2>
+        return <h2>Please wait while we are loading...</h2>
     }
     return (
         <div className="container my-4">
