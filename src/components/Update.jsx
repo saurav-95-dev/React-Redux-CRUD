@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CircleSlash } from "lucide-react";
 
 
 const Update = () => {
+
+  const dispatch = useDispatch();
 
     //capturing the id from the URL using useParams:
     const { id } = useParams();
@@ -29,6 +31,9 @@ const Update = () => {
 
   const handleUpdate=(e)=>{
     e.preventDefault();
+    dispatch(updateUser(updateData))
+
+
   }
 
   return (

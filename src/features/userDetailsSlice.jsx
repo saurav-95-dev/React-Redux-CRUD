@@ -54,6 +54,30 @@ export const deleteUser = createAsyncThunk("deleteUser", async (id , { rejectWit
     }
 });
 
+export const updateUser = createAsyncThunk("updateUser", async (data, { rejectWithValue }) => {
+    try {
+        
+        const response = await fetch(`http://681b0fce17018fe50579cc14.mockapi.io/crud-NIC/${data.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to create user");
+        }
+
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        return rejectWithValue(error);  // send full error
+    }
+});
+
+
+
 // Slice
 export const userDetails = createSlice({
 
@@ -103,6 +127,19 @@ export const userDetails = createSlice({
                 }
             })
             .addCase(deleteUser.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload?.message || "Something went wrong"; // use action.payload if it's an error object
+            })
+
+             .addCase(updateUser.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateUser.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users = [...state.users, action.payload];  // immutable update
+            })
+            .addCase(updateUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload?.message || "Something went wrong"; // use action.payload if it's an error object
             });
