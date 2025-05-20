@@ -137,7 +137,9 @@ export const userDetails = createSlice({
             })
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.users = [...state.users, action.payload];  // immutable update
+                state.users = state.users.map((ele)=>(
+                    ele.id === action.payload.id ? action.payload: ele
+                ))
             })
             .addCase(updateUser.rejected, (state, action) => {
                 state.loading = false;

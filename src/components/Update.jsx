@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { CircleSlash } from "lucide-react";
+import { updateUser } from "../features/userDetailsSlice";
 
 
 const Update = () => {
@@ -10,6 +11,7 @@ const Update = () => {
 
     //capturing the id from the URL using useParams:
     const { id } = useParams();
+    const navigate = useNavigate();
     
     const [updateData, setUpdateData] = useState();
  
@@ -32,7 +34,7 @@ const Update = () => {
   const handleUpdate=(e)=>{
     e.preventDefault();
     dispatch(updateUser(updateData))
-
+    navigate("/read")
 
   }
 
