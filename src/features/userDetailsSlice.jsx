@@ -87,6 +87,7 @@ export const userDetails = createSlice({
         users: [],
         loading: false,
         error: null,
+        searchData : [],
     },
     
     extraReducers: (builder) => {

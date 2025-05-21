@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Navbar() {
 
   const allUsers = useSelector((state)=>state.userDetail.users);
-  const [searchData , setSearchData] = useState("")
+  const [searchData , setSearchData] = useState("");
   console.log(allUsers)
+  const dispatch = useDispatch();
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -32,7 +33,7 @@ export default function Navbar() {
           <form className="d-flex">
             <input className="form-control me-2" type="search" placeholder="Search" 
 
-             onChange={(e)=>setSearchData(e.target.value)}
+             onChange={(e)=>dispatch(searchData(setSearchData(e.target.value)))}
             />
             <button className="btn btn-outline-success" type="submit">Search</button>
           </form>
