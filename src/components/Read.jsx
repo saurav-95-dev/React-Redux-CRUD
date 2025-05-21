@@ -11,7 +11,7 @@ export default function Read() {
     const [id , setId] = useState();
     const [showPopup , setShowPopup] = useState(false)
 
-    const { users, loading } = useSelector((state) => state.userDetail);
+    const { users, loading , searchData } = useSelector((state) => state.userDetail);
 
     useEffect(() => {
         dispatch(showUser())
@@ -25,7 +25,16 @@ export default function Read() {
           { showPopup &&  <CustomModal id={id} showPopup={showPopup} setShowPopup={setShowPopup}/>}
             <h2 className="text-center mb-4">All Users</h2>
             <div className="row g-4">
-                {users && users.map((ele, index) => (
+                {users && 
+                  
+                  users.filter((ele)=>{
+                    if(searchData.length === 0){
+                        return ele
+                    }
+                    else{
+                        return ele.name.toLowerCase().includes(searchData.toLowerCase())
+                    }
+                  }).map((ele, index) => (
                     <div key={ele.id} className="col-12 col-sm-6 col-md-4">
                         <div className="card h-100">
                             <div className="card-body">
