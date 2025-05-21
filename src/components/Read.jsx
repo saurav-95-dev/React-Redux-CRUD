@@ -24,6 +24,18 @@ export default function Read() {
         <div className="container my-4">
           { showPopup &&  <CustomModal id={id} showPopup={showPopup} setShowPopup={setShowPopup}/>}
             <h2 className="text-center mb-4">All Users</h2>
+             <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="gender" value="Male" />
+                <label className="form-check-label">All</label>
+              </div>
+            <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="gender" value="Male" />
+                <label className="form-check-label">Male</label>
+              </div>
+              <div className="form-check form-check-inline">
+                <input className="form-check-input" type="radio" name="gender" value="Female" />
+                <label className="form-check-label">Female</label>
+              </div>
             <div className="row g-4">
                 {users && 
                   
@@ -35,6 +47,7 @@ export default function Read() {
                         return ele.name.toLowerCase().includes(searchData.toLowerCase())
                     }
                   }).map((ele, index) => (
+                    
                     <div key={ele.id} className="col-12 col-sm-6 col-md-4">
                         <div className="card h-100">
                             <div className="card-body">
@@ -47,6 +60,7 @@ export default function Read() {
                                     <Link to={`/edit/${ele.id}`} href="#" className="btn btn-outline-warning">Edit</Link>
                                     <Link onClick={()=>{dispatch(deleteUser(ele.id))}} className="btn btn-outline-danger">Delete</Link>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
