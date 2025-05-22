@@ -311,7 +311,7 @@ export default function Create() {
         
         .btn-primary:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+          box-shadow: 0 6px 20px rgba(59, 60, 63, 0.4) !important;
         }
         
         .btn-outline-secondary:hover {
