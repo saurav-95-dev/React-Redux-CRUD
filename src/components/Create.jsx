@@ -316,7 +316,7 @@ export default function Create() {
         
         .btn-outline-secondary:hover {
           transform: translateY(-2px);
-          background-color: #6c757d;
+          background-color:rgb(170, 183, 195);
           color: white;
         }
         
