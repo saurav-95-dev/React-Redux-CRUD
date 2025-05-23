@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createUser } from "../features/userDetailsSlice";
-import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [users, setUsers] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
+  const [focusedField, setFocusedField] = useState(null);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // Mock navigation and dispatch functions for demo
+  const navigate = (path) => alert(`Navigating to: ${path}`);
+  const dispatch = (action) => console.log("Dispatching:", action);
 
   const validateForm = () => {
     const newErrors = {};
@@ -42,12 +41,9 @@ export default function Create() {
     const { name, value } = e.target;
     setUsers({ ...users, [name]: value });
     
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: "" });
     }
-    
-    console.log(users);
   };
 
   const handleSubmit = async (e) => {
@@ -60,12 +56,9 @@ export default function Create() {
     setIsSubmitting(true);
     
     try {
-      console.log("users", users);
-      dispatch(createUser(users));
-      
-      // Simulate API call delay for better UX
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      const userData = { ...users, id: Date.now() }; // Mock user creation
+      dispatch({ type: 'CREATE_USER', payload: userData });
+      await new Promise(resolve => setTimeout(resolve, 800));
       navigate("/read");
     } catch (error) {
       console.error("Error creating user:", error);
@@ -78,224 +71,261 @@ export default function Create() {
     navigate("/read");
   };
 
+  const handleFocus = (fieldName) => {
+    setFocusedField(fieldName);
+  };
+
+  const handleBlur = () => {
+    setFocusedField(null);
+  };
+
   return (
-    <div className="min-vh-100" style={{ 
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      paddingTop: '2rem',
-      paddingBottom: '2rem'
-    }}>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-8 col-xl-6">
-            <div className="card shadow-lg border-0" style={{
-              borderRadius: '20px',
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(10px)'
-            }}>
-              <div className="card-header text-center py-4" style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                borderRadius: '20px 20px 0 0',
-                border: 'none'
-              }}>
-                <h2 className="mb-0 text-white fw-bold">
-                  <i className="fas fa-user-plus me-2"></i>
-                  Create New User
-                </h2>
-                <p className="text-white-50 mb-0 mt-1">Fill in the details below</p>
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-violet-900 via-purple-800 to-indigo-900">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-pulse animation-delay-4000"></div>
+      </div>
+
+      {/* Floating Particles */}
+      <div className="absolute inset-0">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-white bg-opacity-20 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${2 + Math.random() * 4}s`
+            }}
+          ></div>
+        ))}
+      </div>
+
+      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+        <div className="w-full max-w-lg">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl mb-6 shadow-2xl">
+              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+              </svg>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-2">Create New User</h1>
+            <p className="text-purple-200 text-lg">Join our community today</p>
+          </div>
+
+          {/* Form Card */}
+          <div className="bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white border-opacity-20">
+            <div onSubmit={handleSubmit} className="space-y-6">
+              {/* Name Field */}
+              <div className="relative">
+                <div className={`relative transition-all duration-300 ${focusedField === 'name' ? 'transform -translate-y-1' : ''}`}>
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Enter your full name"
+                    onChange={getUserData}
+                    onFocus={() => handleFocus('name')}
+                    onBlur={handleBlur}
+                    value={users.name || ''}
+                    className={`w-full px-6 py-4 bg-white bg-opacity-90 rounded-2xl border-2 transition-all duration-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:bg-white focus:scale-105 ${
+                      errors.name 
+                        ? 'border-red-400 focus:border-red-500' 
+                        : users.name 
+                          ? 'border-green-400 focus:border-green-500' 
+                          : 'border-transparent focus:border-purple-400'
+                    }`}
+                  />
+                  <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                </div>
+                {errors.name && (
+                  <div className="mt-2 text-red-300 text-sm flex items-center animate-slide-down">
+                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {errors.name}
+                  </div>
+                )}
               </div>
 
-              <div className="card-body p-5">
-                <form onSubmit={handleSubmit}>
-                  <div className="row g-4">
-                    {/* Name Field */}
-                    <div className="col-12">
-                      <div className="form-floating">
-                        <input
-                          type="text"
-                          className={`form-control ${errors.name ? 'is-invalid' : users.name ? 'is-valid' : ''}`}
-                          name="name"
-                          id="name"
-                          placeholder="Enter full name"
-                          onChange={getUserData}
-                          value={users.name || ''}
-                          style={{
-                            borderRadius: '12px',
-                            border: '2px solid #e9ecef',
-                            transition: 'all 0.3s ease'
-                          }}
-                        />
-                        <label htmlFor="name">
-                          <i className="fas fa-user me-2 text-primary"></i>
-                          Full Name
-                        </label>
-                        {errors.name && (
-                          <div className="invalid-feedback d-block">
-                            <i className="fas fa-exclamation-circle me-1"></i>
-                            {errors.name}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Email Field */}
-                    <div className="col-12">
-                      <div className="form-floating">
-                        <input
-                          type="email"
-                          className={`form-control ${errors.email ? 'is-invalid' : users.email ? 'is-valid' : ''}`}
-                          name="email"
-                          id="email"
-                          placeholder="Enter email address"
-                          onChange={getUserData}
-                          value={users.email || ''}
-                          style={{
-                            borderRadius: '12px',
-                            border: '2px solid #e9ecef',
-                            transition: 'all 0.3s ease'
-                          }}
-                        />
-                        <label htmlFor="email">
-                          <i className="fas fa-envelope me-2 text-primary"></i>
-                          Email Address
-                        </label>
-                        {errors.email && (
-                          <div className="invalid-feedback d-block">
-                            <i className="fas fa-exclamation-circle me-1"></i>
-                            {errors.email}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Age Field */}
-                    <div className="col-12">
-                      <div className="form-floating">
-                        <input
-                          type="number"
-                          className={`form-control ${errors.age ? 'is-invalid' : users.age ? 'is-valid' : ''}`}
-                          name="age"
-                          id="age"
-                          placeholder="Enter age"
-                          onChange={getUserData}
-                          value={users.age || ''}
-                          min="1"
-                          max="120"
-                          style={{
-                            borderRadius: '12px',
-                            border: '2px solid #e9ecef',
-                            transition: 'all 0.3s ease'
-                          }}
-                        />
-                        <label htmlFor="age">
-                          <i className="fas fa-calendar-alt me-2 text-primary"></i>
-                          Age
-                        </label>
-                        {errors.age && (
-                          <div className="invalid-feedback d-block">
-                            <i className="fas fa-exclamation-circle me-1"></i>
-                            {errors.age}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Gender Field */}
-                    <div className="col-12">
-                      <label className="form-label fw-bold text-dark mb-3">
-                        <i className="fas fa-venus-mars me-2 text-primary"></i>
-                        Gender
-                      </label>
-                      <div className="d-flex gap-4">
-                        <div className="form-check form-check-custom">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="male"
-                            value="Male"
-                            onChange={getUserData}
-                            checked={users.gender === 'Male'}
-                            style={{
-                              transform: 'scale(1.2)',
-                              accentColor: '#667eea'
-                            }}
-                          />
-                          <label className="form-check-label fw-medium ms-2" htmlFor="male">
-                            <i className="fas fa-mars me-1 text-primary"></i>
-                            Male
-                          </label>
-                        </div>
-                        <div className="form-check form-check-custom">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="female"
-                            value="Female"
-                            onChange={getUserData}
-                            checked={users.gender === 'Female'}
-                            style={{
-                              transform: 'scale(1.2)',
-                              accentColor: '#667eea'
-                            }}
-                          />
-                          <label className="form-check-label fw-medium ms-2" htmlFor="female">
-                            <i className="fas fa-venus me-1 text-primary"></i>
-                            Female
-                          </label>
-                        </div>
-                      </div>
-                      {errors.gender && (
-                        <div className="text-danger mt-2">
-                          <i className="fas fa-exclamation-circle me-1"></i>
-                          {errors.gender}
-                        </div>
-                      )}
-                    </div>
+              {/* Email Field */}
+              <div className="relative">
+                <div className={`relative transition-all duration-300 ${focusedField === 'email' ? 'transform -translate-y-1' : ''}`}>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter your email address"
+                    onChange={getUserData}
+                    onFocus={() => handleFocus('email')}
+                    onBlur={handleBlur}
+                    value={users.email || ''}
+                    className={`w-full px-6 py-4 pl-14 bg-white bg-opacity-90 rounded-2xl border-2 transition-all duration-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:bg-white focus:scale-105 ${
+                      errors.email 
+                        ? 'border-red-400 focus:border-red-500' 
+                        : users.email 
+                          ? 'border-green-400 focus:border-green-500' 
+                          : 'border-transparent focus:border-purple-400'
+                    }`}
+                  />
+                  <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
                   </div>
-
-                  {/* Action Buttons */}
-                  <div className="d-flex gap-3 mt-5">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="btn btn-primary flex-fill py-3 fw-bold"
-                      style={{
-                        borderRadius: '12px',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        border: 'none',
-                        boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status"></span>
-                          Creating...
-                        </>
-                      ) : (
-                        <>
-                          <i className="fas fa-plus-circle me-2"></i>
-                          Create User
-                        </>
-                      )}
-                    </button>
-                    
-                    <button
-                      type="button"
-                      onClick={handleCancel}
-                      className="btn btn-outline-secondary py-3 px-4 fw-bold"
-                      style={{
-                        borderRadius: '12px',
-                        border: '2px solid #6c757d',
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      <i className="fas fa-times me-2"></i>
-                      Cancel
-                    </button>
+                </div>
+                {errors.email && (
+                  <div className="mt-2 text-red-300 text-sm flex items-center animate-slide-down">
+                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {errors.email}
                   </div>
-                </form>
+                )}
+              </div>
+
+              {/* Age Field */}
+              <div className="relative">
+                <div className={`relative transition-all duration-300 ${focusedField === 'age' ? 'transform -translate-y-1' : ''}`}>
+                  <input
+                    type="number"
+                    name="age"
+                    id="age"
+                    placeholder="Enter your age"
+                    onChange={getUserData}
+                    onFocus={() => handleFocus('age')}
+                    onBlur={handleBlur}
+                    value={users.age || ''}
+                    min="1"
+                    max="120"
+                    className={`w-full px-6 py-4 pl-14 bg-white bg-opacity-90 rounded-2xl border-2 transition-all duration-300 text-gray-800 placeholder-gray-500 focus:outline-none focus:bg-white focus:scale-105 ${
+                      errors.age 
+                        ? 'border-red-400 focus:border-red-500' 
+                        : users.age 
+                          ? 'border-green-400 focus:border-green-500' 
+                          : 'border-transparent focus:border-purple-400'
+                    }`}
+                  />
+                  <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
+                    <svg className="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                </div>
+                {errors.age && (
+                  <div className="mt-2 text-red-300 text-sm flex items-center animate-slide-down">
+                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {errors.age}
+                  </div>
+                )}
+              </div>
+
+              {/* Gender Field */}
+              <div className="space-y-4">
+                <label className="text-white font-semibold text-lg flex items-center">
+                  <svg className="w-5 h-5 mr-2 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                  </svg>
+                  Gender
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  <label className={`relative cursor-pointer transition-all duration-300 ${users.gender === 'Male' ? 'scale-105' : 'hover:scale-102'}`}>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Male"
+                      onChange={getUserData}
+                      checked={users.gender === 'Male'}
+                      className="sr-only"
+                    />
+                    <div className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
+                      users.gender === 'Male' 
+                        ? 'bg-gradient-to-r from-blue-500 to-purple-600 border-transparent text-white shadow-lg' 
+                        : 'bg-white bg-opacity-20 border-white border-opacity-30 text-white hover:bg-opacity-30'
+                    }`}>
+                      <svg className="w-6 h-6 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.5 8.5l7 7m0 0V9m0 6.5H9" />
+                      </svg>
+                      <span className="font-medium">Male</span>
+                    </div>
+                  </label>
+                  <label className={`relative cursor-pointer transition-all duration-300 ${users.gender === 'Female' ? 'scale-105' : 'hover:scale-102'}`}>
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="Female"
+                      onChange={getUserData}
+                      checked={users.gender === 'Female'}
+                      className="sr-only"
+                    />
+                    <div className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
+                      users.gender === 'Female' 
+                        ? 'bg-gradient-to-r from-pink-500 to-purple-600 border-transparent text-white shadow-lg' 
+                        : 'bg-white bg-opacity-20 border-white border-opacity-30 text-white hover:bg-opacity-30'
+                    }`}>
+                      <svg className="w-6 h-6 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 1v6m0 6v6m6-6h-6m0 0H6" />
+                      </svg>
+                      <span className="font-medium">Female</span>
+                    </div>
+                  </label>
+                </div>
+                {errors.gender && (
+                  <div className="text-red-300 text-sm flex items-center animate-slide-down">
+                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    {errors.gender}
+                  </div>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 pt-6">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex-1 relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-500 focus:ring-opacity-50 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-pink-400 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="relative flex items-center justify-center">
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                        Creating User...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                        Create User
+                      </>
+                    )}
+                  </div>
+                </button>
+                
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="sm:w-auto px-6 py-4 bg-white bg-opacity-20 text-white font-medium rounded-2xl border-2 border-white border-opacity-30 transition-all duration-300 hover:bg-opacity-30 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50"
+                >
+                  <svg className="w-5 h-5 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                  Cancel
+                </button>
               </div>
             </div>
           </div>
@@ -303,45 +333,41 @@ export default function Create() {
       </div>
 
       <style jsx>{`
-        .form-control:focus {
-          border-color: #667eea !important;
-          box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
-          transform: translateY(-2px);
+        @keyframes slide-down {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
         
-        .btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(59, 60, 63, 0.4) !important;
+        .animate-slide-down {
+          animation: slide-down 0.3s ease-out;
         }
         
-        .btn-outline-secondary:hover {
-          transform: translateY(-2px);
-          background-color:rgb(170, 183, 195);
-          color: white;
+        .animation-delay-2000 {
+          animation-delay: 2s;
         }
         
-        .form-check-input:checked {
-          background-color: #667eea;
-          border-color: #667eea;
+        .animation-delay-4000 {
+          animation-delay: 4s;
         }
         
-        .card {
-          transition: all 0.3s ease;
+        .hover\\:scale-102:hover {
+          transform: scale(1.02);
         }
         
-        .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
         
-        .form-floating > label {
-          color: #6c757d;
-          font-weight: 500;
-        }
-        
-        .form-floating > .form-control:focus ~ label,
-        .form-floating > .form-control:not(:placeholder-shown) ~ label {
-          color: #667eea;
+        input[type="number"] {
+          -moz-appearance: textfield;
         }
       `}</style>
     </div>
