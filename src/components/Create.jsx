@@ -114,7 +114,7 @@ export default function Create() {
               </svg>
             </div>
             <h1 className="text-4xl font-bold text-white mb-2">Create New User</h1>
-            <p className="text-purple-200 text-lg">Join our community today</p>
+            <p className="text-purple-200 text-lg">Enter you tickets here</p>
           </div>
 
           {/* Form Card */}
