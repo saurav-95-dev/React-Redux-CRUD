@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createUser } from "../features/userDetailsSlice";
-import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [users, setUsers] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // Mock navigation and dispatch for demo
+  const navigate = (path) => console.log('Navigate to:', path);
+  const dispatch = (action) => console.log('Dispatch:', action);
 
   const validateForm = () => {
     const newErrors = {};
@@ -61,7 +59,7 @@ export default function Create() {
     
     try {
       console.log("users", users);
-      dispatch(createUser(users));
+      dispatch({ type: 'createUser', payload: users });
       
       // Simulate API call delay for better UX
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -79,223 +77,248 @@ export default function Create() {
   };
 
   return (
-    <div className="min-vh-100" style={{ 
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      paddingTop: '2rem',
-      paddingBottom: '2rem'
+    <div className="min-h-screen relative overflow-hidden" style={{
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
     }}>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-lg-8 col-xl-6">
-            <div className="card shadow-lg border-0" style={{
-              borderRadius: '20px',
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(10px)'
-            }}>
-              <div className="card-header text-center py-4" style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                borderRadius: '20px 20px 0 0',
-                border: 'none'
-              }}>
-                <h2 className="mb-0 text-white fw-bold">
-                  <i className="fas fa-user-plus me-2"></i>
-                  Create New User
-                </h2>
-                <p className="text-white-50 mb-0 mt-1">Fill in the details below</p>
-              </div>
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="floating-shape shape-1"></div>
+        <div className="floating-shape shape-2"></div>
+        <div className="floating-shape shape-3"></div>
+        <div className="floating-shape shape-4"></div>
+      </div>
+      
+      <div className="relative z-10 py-8 px-4">
+        <div className="max-w-2xl mx-auto">
+          {/* Header Section */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/20 backdrop-blur-sm mb-4 shadow-lg">
+              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+              </svg>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-2">Create New User</h1>
+            <p className="text-white/80 text-lg">Join our community by filling out the form below</p>
+          </div>
 
-              <div className="card-body p-5">
-                <form onSubmit={handleSubmit}>
-                  <div className="row g-4">
-                    {/* Name Field */}
-                    <div className="col-12">
-                      <div className="form-floating">
-                        <input
-                          type="text"
-                          className={`form-control ${errors.name ? 'is-invalid' : users.name ? 'is-valid' : ''}`}
-                          name="name"
-                          id="name"
-                          placeholder="Enter full name"
-                          onChange={getUserData}
-                          value={users.name || ''}
-                          style={{
-                            borderRadius: '12px',
-                            border: '2px solid #e9ecef',
-                            transition: 'all 0.3s ease'
-                          }}
-                        />
-                        <label htmlFor="name">
-                          <i className="fas fa-user me-2 text-primary"></i>
-                          Full Name
-                        </label>
-                        {errors.name && (
-                          <div className="invalid-feedback d-block">
-                            <i className="fas fa-exclamation-circle me-1"></i>
-                            {errors.name}
-                          </div>
-                        )}
+          {/* Main Form Card */}
+          <div className="backdrop-blur-lg bg-white/95 rounded-3xl shadow-2xl border border-white/20 overflow-hidden transform transition-all duration-500 hover:scale-[1.02]">
+            <div className="p-8">
+              <div onSubmit={handleSubmit} className="space-y-6">
+                {/* Name Field */}
+                <div className="group">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-purple-600">
+                    <svg className="inline w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    Full Name
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      name="name"
+                      value={users.name || ''}
+                      onChange={getUserData}
+                      className={`w-full px-4 py-4 bg-gray-50/50 border-2 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-0 focus:bg-white focus:shadow-lg focus:scale-[1.02] ${
+                        errors.name ? 'border-red-400 bg-red-50/50' : 
+                        users.name ? 'border-green-400 bg-green-50/50' : 
+                        'border-gray-200 focus:border-purple-400'
+                      }`}
+                      placeholder="Enter your full name"
+                    />
+                    {users.name && (
+                      <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                        <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                        </div>
                       </div>
-                    </div>
+                    )}
+                  </div>
+                  {errors.name && (
+                    <p className="mt-2 text-sm text-red-600 flex items-center animate-pulse">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path>
+                      </svg>
+                      {errors.name}
+                    </p>
+                  )}
+                </div>
 
-                    {/* Email Field */}
-                    <div className="col-12">
-                      <div className="form-floating">
-                        <input
-                          type="email"
-                          className={`form-control ${errors.email ? 'is-invalid' : users.email ? 'is-valid' : ''}`}
-                          name="email"
-                          id="email"
-                          placeholder="Enter email address"
-                          onChange={getUserData}
-                          value={users.email || ''}
-                          style={{
-                            borderRadius: '12px',
-                            border: '2px solid #e9ecef',
-                            transition: 'all 0.3s ease'
-                          }}
-                        />
-                        <label htmlFor="email">
-                          <i className="fas fa-envelope me-2 text-primary"></i>
-                          Email Address
-                        </label>
-                        {errors.email && (
-                          <div className="invalid-feedback d-block">
-                            <i className="fas fa-exclamation-circle me-1"></i>
-                            {errors.email}
-                          </div>
-                        )}
+                {/* Email Field */}
+                <div className="group">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-purple-600">
+                    <svg className="inline w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      name="email"
+                      value={users.email || ''}
+                      onChange={getUserData}
+                      className={`w-full px-4 py-4 bg-gray-50/50 border-2 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-0 focus:bg-white focus:shadow-lg focus:scale-[1.02] ${
+                        errors.email ? 'border-red-400 bg-red-50/50' : 
+                        users.email ? 'border-green-400 bg-green-50/50' : 
+                        'border-gray-200 focus:border-purple-400'
+                      }`}
+                      placeholder="Enter your email address"
+                    />
+                    {users.email && !errors.email && (
+                      <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                        <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                        </div>
                       </div>
-                    </div>
+                    )}
+                  </div>
+                  {errors.email && (
+                    <p className="mt-2 text-sm text-red-600 flex items-center animate-pulse">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path>
+                      </svg>
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
 
-                    {/* Age Field */}
-                    <div className="col-12">
-                      <div className="form-floating">
-                        <input
-                          type="number"
-                          className={`form-control ${errors.age ? 'is-invalid' : users.age ? 'is-valid' : ''}`}
-                          name="age"
-                          id="age"
-                          placeholder="Enter age"
-                          onChange={getUserData}
-                          value={users.age || ''}
-                          min="1"
-                          max="120"
-                          style={{
-                            borderRadius: '12px',
-                            border: '2px solid #e9ecef',
-                            transition: 'all 0.3s ease'
-                          }}
-                        />
-                        <label htmlFor="age">
-                          <i className="fas fa-calendar-alt me-2 text-primary"></i>
-                          Age
-                        </label>
-                        {errors.age && (
-                          <div className="invalid-feedback d-block">
-                            <i className="fas fa-exclamation-circle me-1"></i>
-                            {errors.age}
-                          </div>
-                        )}
+                {/* Age Field */}
+                <div className="group">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-purple-600">
+                    <svg className="inline w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    Age
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="number"
+                      name="age"
+                      value={users.age || ''}
+                      onChange={getUserData}
+                      min="1"
+                      max="120"
+                      className={`w-full px-4 py-4 bg-gray-50/50 border-2 rounded-2xl transition-all duration-300 focus:outline-none focus:ring-0 focus:bg-white focus:shadow-lg focus:scale-[1.02] ${
+                        errors.age ? 'border-red-400 bg-red-50/50' : 
+                        users.age ? 'border-green-400 bg-green-50/50' : 
+                        'border-gray-200 focus:border-purple-400'
+                      }`}
+                      placeholder="Enter your age"
+                    />
+                    {users.age && !errors.age && (
+                      <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+                        <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                          </svg>
+                        </div>
                       </div>
-                    </div>
+                    )}
+                  </div>
+                  {errors.age && (
+                    <p className="mt-2 text-sm text-red-600 flex items-center animate-pulse">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path>
+                      </svg>
+                      {errors.age}
+                    </p>
+                  )}
+                </div>
 
-                    {/* Gender Field */}
-                    <div className="col-12">
-                      <label className="form-label fw-bold text-dark mb-3">
-                        <i className="fas fa-venus-mars me-2 text-primary"></i>
-                        Gender
+                {/* Gender Field */}
+                <div className="group">
+                  <label className="block text-sm font-semibold text-gray-700 mb-4">
+                    <svg className="inline w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                    Gender
+                  </label>
+                  <div className="flex gap-4">
+                    {['Male', 'Female'].map((gender) => (
+                      <label key={gender} className="flex-1 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="gender"
+                          value={gender}
+                          onChange={getUserData}
+                          checked={users.gender === gender}
+                          className="sr-only"
+                        />
+                        <div className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 transform hover:scale-105 ${
+                          users.gender === gender 
+                            ? 'border-purple-500 bg-purple-50 shadow-lg scale-105' 
+                            : 'border-gray-200 bg-gray-50/50 hover:border-gray-300'
+                        }`}>
+                          <div className="flex items-center justify-center space-x-2">
+                            <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                              users.gender === gender 
+                                ? 'border-purple-500 bg-purple-500' 
+                                : 'border-gray-300'
+                            }`}>
+                              {users.gender === gender && (
+                                <div className="w-3 h-3 bg-white rounded-full"></div>
+                              )}
+                            </div>
+                            <span className={`font-medium ${
+                              users.gender === gender ? 'text-purple-700' : 'text-gray-600'
+                            }`}>
+                              {gender}
+                            </span>
+                          </div>
+                        </div>
                       </label>
-                      <div className="d-flex gap-4">
-                        <div className="form-check form-check-custom">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="male"
-                            value="Male"
-                            onChange={getUserData}
-                            checked={users.gender === 'Male'}
-                            style={{
-                              transform: 'scale(1.2)',
-                              accentColor: '#667eea'
-                            }}
-                          />
-                          <label className="form-check-label fw-medium ms-2" htmlFor="male">
-                            <i className="fas fa-mars me-1 text-primary"></i>
-                            Male
-                          </label>
-                        </div>
-                        <div className="form-check form-check-custom">
-                          <input
-                            className="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="female"
-                            value="Female"
-                            onChange={getUserData}
-                            checked={users.gender === 'Female'}
-                            style={{
-                              transform: 'scale(1.2)',
-                              accentColor: '#667eea'
-                            }}
-                          />
-                          <label className="form-check-label fw-medium ms-2" htmlFor="female">
-                            <i className="fas fa-venus me-1 text-primary"></i>
-                            Female
-                          </label>
-                        </div>
-                      </div>
-                      {errors.gender && (
-                        <div className="text-danger mt-2">
-                          <i className="fas fa-exclamation-circle me-1"></i>
-                          {errors.gender}
-                        </div>
-                      )}
-                    </div>
+                    ))}
                   </div>
+                  {errors.gender && (
+                    <p className="mt-2 text-sm text-red-600 flex items-center animate-pulse">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path>
+                      </svg>
+                      {errors.gender}
+                    </p>
+                  )}
+                </div>
 
-                  {/* Action Buttons */}
-                  <div className="d-flex gap-3 mt-5">
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="btn btn-primary flex-fill py-3 fw-bold"
-                      style={{
-                        borderRadius: '12px',
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                        border: 'none',
-                        boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status"></span>
-                          Creating...
-                        </>
-                      ) : (
-                        <>
-                          <i className="fas fa-plus-circle me-2"></i>
-                          Create User
-                        </>
-                      )}
-                    </button>
-                    
-                    <button
-                      type="button"
-                      onClick={handleCancel}
-                      className="btn btn-outline-secondary py-3 px-4 fw-bold"
-                      style={{
-                        borderRadius: '12px',
-                        border: '2px solid #6c757d',
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      <i className="fas fa-times me-2"></i>
+                {/* Action Buttons */}
+                <div className="flex gap-4 pt-4">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-1 py-4 px-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-bold rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  >
+                    {isSubmitting ? (
+                      <div className="flex items-center justify-center">
+                        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                        Creating...
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center">
+                        <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                        Create User
+                      </div>
+                    )}
+                  </button>
+                  
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="px-6 py-4 bg-gray-100 text-gray-700 font-bold rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:bg-gray-200 hover:shadow-xl"
+                  >
+                    <div className="flex items-center justify-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                      </svg>
                       Cancel
-                    </button>
-                  </div>
-                </form>
+                    </div>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -303,45 +326,57 @@ export default function Create() {
       </div>
 
       <style jsx>{`
-        .form-control:focus {
-          border-color: #667eea !important;
-          box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
-          transform: translateY(-2px);
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(5deg); }
         }
         
-        .btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+        @keyframes floatReverse {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(20px) rotate(-5deg); }
         }
         
-        .btn-outline-secondary:hover {
-          transform: translateY(-2px);
-          background-color: #6c757d;
-          color: white;
+        .floating-shape {
+          position: absolute;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 50%;
+          backdrop-filter: blur(10px);
         }
         
-        .form-check-input:checked {
-          background-color: #667eea;
-          border-color: #667eea;
+        .shape-1 {
+          width: 80px;
+          height: 80px;
+          top: 10%;
+          left: 10%;
+          animation: float 6s ease-in-out infinite;
         }
         
-        .card {
-          transition: all 0.3s ease;
+        .shape-2 {
+          width: 120px;
+          height: 120px;
+          top: 20%;
+          right: 15%;
+          animation: floatReverse 8s ease-in-out infinite;
         }
         
-        .card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+        .shape-3 {
+          width: 60px;
+          height: 60px;
+          bottom: 20%;
+          left: 20%;
+          animation: float 7s ease-in-out infinite;
         }
         
-        .form-floating > label {
-          color: #6c757d;
-          font-weight: 500;
+        .shape-4 {
+          width: 100px;
+          height: 100px;
+          bottom: 10%;
+          right: 10%;
+          animation: floatReverse 5s ease-in-out infinite;
         }
         
-        .form-floating > .form-control:focus ~ label,
-        .form-floating > .form-control:not(:placeholder-shown) ~ label {
-          color: #667eea;
+        .group:focus-within label {
+          color: #9333ea;
         }
       `}</style>
     </div>
