@@ -66,6 +66,7 @@ const Update = () => {
           />
         </div>
         <div className="mb-3">
+          
           <label className="form-label">Age</label>
           <input
             type="text"
