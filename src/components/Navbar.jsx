@@ -5,8 +5,10 @@ import { searchUser } from "../features/userDetailsSlice";
 
 export default function Navbar() {
 
-  const allUsers = useSelector((state)=>state.userDetail.users);
-  const [searchData , setSearchData] = useState("");
+  const allUsers = useSelector((state) => state.userDetail.users);
+  
+  const [searchData, setSearchData] = useState(""); 
+  
   console.log(allUsers)
   const dispatch = useDispatch();
 
