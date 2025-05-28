@@ -23,6 +23,7 @@ export default function Read() {
     return (
         <div className="container my-4">
           { showPopup &&  <CustomModal id={id} showPopup={showPopup} setShowPopup={setShowPopup}/>}
+          
             <h2 className="text-center mb-4">All Users</h2>
              <div className="form-check form-check-inline">
                 <input className="form-check-input" type="radio" name="gender" />
