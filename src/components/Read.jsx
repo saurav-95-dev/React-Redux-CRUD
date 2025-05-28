@@ -31,10 +31,7 @@ export default function Read() {
     const matchesSearch =
       searchData.length === 0 ||
       user.name.toLowerCase().includes(searchData.toLowerCase());
-
-    const matchesGender =
-      genderFilter === "All" || user.gender === genderFilter;
-
+    const matchesGender = genderFilter === "All" || user.gender === genderFilter;
     return matchesSearch && matchesGender;
   });
 
@@ -52,10 +49,13 @@ export default function Read() {
         />
       )}
 
-      <h2 className="text-center mb-4 fw-bold">User Directory</h2>
+      <div className="text-center mb-4">
+        <h2 className="fw-bold">User Directory</h2>
+        <p className="text-muted">Manage and explore all registered users</p>
+      </div>
 
       {/* Gender Filter */}
-      <div className="d-flex justify-content-center mb-4 gap-3">
+      <div className="d-flex justify-content-center mb-4 gap-3 flex-wrap">
         {["All", "Male", "Female"].map((gender) => (
           <div className="form-check form-check-inline" key={gender}>
             <input
@@ -92,36 +92,50 @@ export default function Read() {
         ) : (
           filteredUsers.map((user) => (
             <div key={user.id} className="col-12 col-sm-6 col-md-4">
-              <div className="card h-100 shadow-sm border-0 rounded-4">
+              <div className="card h-100 shadow border-0 rounded-4 p-2 user-card position-relative">
+                {/* Avatar + Badge */}
+                <div className="position-absolute top-0 end-0 m-2">
+                  <span
+                    className={`badge ${
+                      user.gender === "Male" ? "bg-primary" : "bg-pink"
+                    }`}
+                  >
+                    {user.gender}
+                  </span>
+                </div>
                 <div className="card-body d-flex flex-column justify-content-between">
-                  <div>
-                    <h5 className="card-title fw-bold">{user.name}</h5>
-                    <p className="card-text mb-1">
-                      <i className="fas fa-envelope me-2"></i>{user.email}
-                    </p>
-                    <p className="card-text mb-1">
-                      <i className="fas fa-user me-2"></i>Age: {user.age}
-                    </p>
-                    <p className="card-text mb-2">
-                      <i className="fas fa-venus-mars me-2"></i>Gender: {user.gender}
+                  <div className="text-center mb-3">
+                    <img
+                      src={`https://api.dicebear.com/7.x/initials/svg?seed=${user.name}`}
+                      alt="Avatar"
+                      className="rounded-circle mb-3"
+                      width="80"
+                      height="80"
+                    />
+                    <h5 className="fw-semibold">{user.name}</h5>
+                    <p className="text-muted small">{user.email}</p>
+                  </div>
+                  <div className="text-center mb-2">
+                    <p className="mb-1">
+                      <i className="fas fa-user me-2 text-secondary"></i>Age:{" "}
+                      <span className="fw-semibold">{user.age}</span>
                     </p>
                   </div>
-
-                  <div className="d-flex flex-column gap-2 mt-3">
+                  <div className="d-flex flex-column gap-2 mt-2">
                     <button
-                      className="btn btn-outline-primary"
+                      className="btn btn-outline-primary transition"
                       onClick={() => handleView(user.id)}
                     >
                       <i className="fas fa-eye me-2"></i>View
                     </button>
                     <Link
                       to={`/edit/${user.id}`}
-                      className="btn btn-outline-warning"
+                      className="btn btn-outline-warning transition"
                     >
                       <i className="fas fa-edit me-2"></i>Edit
                     </Link>
                     <button
-                      className="btn btn-outline-danger"
+                      className="btn btn-outline-danger transition"
                       onClick={() => handleDelete(user.id)}
                     >
                       <i className="fas fa-trash me-2"></i>Delete
