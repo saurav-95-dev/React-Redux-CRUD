@@ -1,4 +1,4 @@
-### React-Stage2 : (May-Phase)
+### React-Stage2 : April Phase
 
 ## CONCEPT OF REDUX-TOOLKIT : -> Completed
 
