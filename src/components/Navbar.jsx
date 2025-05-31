@@ -12,8 +12,10 @@ export default function Navbar() {
   console.log(allUsers)
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-      dispatch(searchUser(searchData));
+  useEffect(() => {
+    
+    dispatch(searchUser(searchData));
+    
   },[searchData])
 
   return (
