@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { createUser } from "../features/userDetailsSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Create() {
   const [users, setUsers] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
-  // Mock navigation and dispatch for demo
-  const navigate = (path) => console.log(`Navigate to: ${path}`);
-  const dispatch = (action) => console.log('Dispatch:', action);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validateForm = () => {
     const newErrors = {};
@@ -59,13 +61,11 @@ export default function Create() {
     
     try {
       console.log("users", users);
-      // Mock dispatch for demo
-      dispatch({ type: 'CREATE_USER', payload: users });
+      dispatch(createUser(users));
       
       // Simulate API call delay for better UX
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 500));
       
-      alert('User created successfully!');
       navigate("/read");
     } catch (error) {
       console.error("Error creating user:", error);
@@ -79,57 +79,57 @@ export default function Create() {
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center" style={{ 
-      background: 'linear-gradient(145deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-      position: 'relative',
-      overflow: 'hidden'
+    <div className="min-vh-100" style={{ 
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      paddingTop: '2rem',
+      paddingBottom: '2rem'
     }}>
-      {/* Animated Background Elements */}
-      <div className="position-absolute w-100 h-100" style={{ zIndex: 0 }}>
-        <div className="floating-shape shape-1"></div>
-        <div className="floating-shape shape-2"></div>
-        <div className="floating-shape shape-3"></div>
-        <div className="floating-shape shape-4"></div>
-      </div>
-
-      <div className="container position-relative" style={{ zIndex: 1 }}>
+      <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8 col-xl-6">
-            <div className="main-card shadow-lg border-0">
-              {/* Header with enhanced design */}
-              <div className="card-header text-center">
-                <div className="header-icon mb-3">
-                  <div className="icon-circle">
-                    <i className="fas fa-user-plus"></i>
-                  </div>
-                </div>
-                <h2 className="mb-2 text-white fw-bold">Create New User</h2>
-                <p className="text-white-75 mb-0">Fill in the details below to get started</p>
+            <div className="card shadow-lg border-0" style={{
+              borderRadius: '20px',
+              background: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <div className="card-header text-center py-4" style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '20px 20px 0 0',
+                border: 'none'
+              }}>
+                <h2 className="mb-0 text-white fw-bold">
+                  <i className="fas fa-user-plus me-2"></i>
+                  Create New User
+                </h2>
+                <p className="text-white-50 mb-0 mt-1">Fill in the details below</p>
               </div>
 
               <div className="card-body p-5">
-                <div onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                   <div className="row g-4">
                     {/* Name Field */}
                     <div className="col-12">
-                      <div className="input-group-modern">
-                        <div className="input-icon">
-                          <i className="fas fa-user"></i>
-                        </div>
-                        <div className="form-floating">
-                          <input
-                            type="text"
-                            className={`form-control modern-input ${errors.name ? 'is-invalid' : users.name ? 'is-valid' : ''}`}
-                            name="name"
-                            id="name"
-                            placeholder="Enter full name"
-                            onChange={getUserData}
-                            value={users.name || ''}
-                          />
-                          <label htmlFor="name">Full Name</label>
-                        </div>
+                      <div className="form-floating">
+                        <input
+                          type="text"
+                          className={`form-control ${errors.name ? 'is-invalid' : users.name ? 'is-valid' : ''}`}
+                          name="name"
+                          id="name"
+                          placeholder="Enter full name"
+                          onChange={getUserData}
+                          value={users.name || ''}
+                          style={{
+                            borderRadius: '12px',
+                            border: '2px solid #e9ecef',
+                            transition: 'all 0.3s ease'
+                          }}
+                        />
+                        <label htmlFor="name">
+                          <i className="fas fa-user me-2 text-primary"></i>
+                          Full Name
+                        </label>
                         {errors.name && (
-                          <div className="error-message">
+                          <div className="invalid-feedback d-block">
                             <i className="fas fa-exclamation-circle me-1"></i>
                             {errors.name}
                           </div>
@@ -139,24 +139,27 @@ export default function Create() {
 
                     {/* Email Field */}
                     <div className="col-12">
-                      <div className="input-group-modern">
-                        <div className="input-icon">
-                          <i className="fas fa-envelope"></i>
-                        </div>
-                        <div className="form-floating">
-                          <input
-                            type="email"
-                            className={`form-control modern-input ${errors.email ? 'is-invalid' : users.email ? 'is-valid' : ''}`}
-                            name="email"
-                            id="email"
-                            placeholder="Enter email address"
-                            onChange={getUserData}
-                            value={users.email || ''}
-                          />
-                          <label htmlFor="email">Email Address</label>
-                        </div>
+                      <div className="form-floating">
+                        <input
+                          type="email"
+                          className={`form-control ${errors.email ? 'is-invalid' : users.email ? 'is-valid' : ''}`}
+                          name="email"
+                          id="email"
+                          placeholder="Enter email address"
+                          onChange={getUserData}
+                          value={users.email || ''}
+                          style={{
+                            borderRadius: '12px',
+                            border: '2px solid #e9ecef',
+                            transition: 'all 0.3s ease'
+                          }}
+                        />
+                        <label htmlFor="email">
+                          <i className="fas fa-envelope me-2 text-primary"></i>
+                          Email Address
+                        </label>
                         {errors.email && (
-                          <div className="error-message">
+                          <div className="invalid-feedback d-block">
                             <i className="fas fa-exclamation-circle me-1"></i>
                             {errors.email}
                           </div>
@@ -166,26 +169,29 @@ export default function Create() {
 
                     {/* Age Field */}
                     <div className="col-12">
-                      <div className="input-group-modern">
-                        <div className="input-icon">
-                          <i className="fas fa-calendar-alt"></i>
-                        </div>
-                        <div className="form-floating">
-                          <input
-                            type="number"
-                            className={`form-control modern-input ${errors.age ? 'is-invalid' : users.age ? 'is-valid' : ''}`}
-                            name="age"
-                            id="age"
-                            placeholder="Enter age"
-                            onChange={getUserData}
-                            value={users.age || ''}
-                            min="1"
-                            max="120"
-                          />
-                          <label htmlFor="age">Age</label>
-                        </div>
+                      <div className="form-floating">
+                        <input
+                          type="number"
+                          className={`form-control ${errors.age ? 'is-invalid' : users.age ? 'is-valid' : ''}`}
+                          name="age"
+                          id="age"
+                          placeholder="Enter age"
+                          onChange={getUserData}
+                          value={users.age || ''}
+                          min="1"
+                          max="120"
+                          style={{
+                            borderRadius: '12px',
+                            border: '2px solid #e9ecef',
+                            transition: 'all 0.3s ease'
+                          }}
+                        />
+                        <label htmlFor="age">
+                          <i className="fas fa-calendar-alt me-2 text-primary"></i>
+                          Age
+                        </label>
                         {errors.age && (
-                          <div className="error-message">
+                          <div className="invalid-feedback d-block">
                             <i className="fas fa-exclamation-circle me-1"></i>
                             {errors.age}
                           </div>
@@ -195,68 +201,76 @@ export default function Create() {
 
                     {/* Gender Field */}
                     <div className="col-12">
-                      <div className="gender-section">
-                        <label className="section-label">
-                          <i className="fas fa-venus-mars me-2"></i>
-                          Gender
-                        </label>
-                        <div className="gender-options">
-                          <div className="gender-card">
-                            <input
-                              className="gender-input"
-                              type="radio"
-                              name="gender"
-                              id="male"
-                              value="Male"
-                              onChange={getUserData}
-                              checked={users.gender === 'Male'}
-                            />
-                            <label className="gender-label" htmlFor="male">
-                              <div className="gender-icon male-icon">
-                                <i className="fas fa-mars"></i>
-                              </div>
-                              <span>Male</span>
-                            </label>
-                          </div>
-                          <div className="gender-card">
-                            <input
-                              className="gender-input"
-                              type="radio"
-                              name="gender"
-                              id="female"
-                              value="Female"
-                              onChange={getUserData}
-                              checked={users.gender === 'Female'}
-                            />
-                            <label className="gender-label" htmlFor="female">
-                              <div className="gender-icon female-icon">
-                                <i className="fas fa-venus"></i>
-                              </div>
-                              <span>Female</span>
-                            </label>
-                          </div>
+                      <label className="form-label fw-bold text-dark mb-3">
+                        <i className="fas fa-venus-mars me-2 text-primary"></i>
+                        Gender
+                      </label>
+                      <div className="d-flex gap-4">
+                        <div className="form-check form-check-custom">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="male"
+                            value="Male"
+                            onChange={getUserData}
+                            checked={users.gender === 'Male'}
+                            style={{
+                              transform: 'scale(1.2)',
+                              accentColor: '#667eea'
+                            }}
+                          />
+                          <label className="form-check-label fw-medium ms-2" htmlFor="male">
+                            <i className="fas fa-mars me-1 text-primary"></i>
+                            Male
+                          </label>
                         </div>
-                        {errors.gender && (
-                          <div className="error-message mt-2">
-                            <i className="fas fa-exclamation-circle me-1"></i>
-                            {errors.gender}
-                          </div>
-                        )}
+                        <div className="form-check form-check-custom">
+                          <input
+                            className="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="female"
+                            value="Female"
+                            onChange={getUserData}
+                            checked={users.gender === 'Female'}
+                            style={{
+                              transform: 'scale(1.2)',
+                              accentColor: '#667eea'
+                            }}
+                          />
+                          <label className="form-check-label fw-medium ms-2" htmlFor="female">
+                            <i className="fas fa-venus me-1 text-primary"></i>
+                            Female
+                          </label>
+                        </div>
                       </div>
+                      {errors.gender && (
+                        <div className="text-danger mt-2">
+                          <i className="fas fa-exclamation-circle me-1"></i>
+                          {errors.gender}
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="action-buttons mt-5">
+                  <div className="d-flex gap-3 mt-5">
                     <button
-                      type="button"
-                      onClick={handleSubmit}
+                      type="submit"
                       disabled={isSubmitting}
-                      className="btn-modern btn-primary-modern"
+                      className="btn btn-primary flex-fill py-3 fw-bold"
+                      style={{
+                        borderRadius: '12px',
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        border: 'none',
+                        boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
+                        transition: 'all 0.3s ease'
+                      }}
                     >
                       {isSubmitting ? (
                         <>
-                          <div className="spinner-modern me-2"></div>
+                          <span className="spinner-border spinner-border-sm me-2" role="status"></span>
                           Creating...
                         </>
                       ) : (
@@ -270,13 +284,18 @@ export default function Create() {
                     <button
                       type="button"
                       onClick={handleCancel}
-                      className="btn-modern btn-secondary-modern"
+                      className="btn btn-outline-secondary py-3 px-4 fw-bold"
+                      style={{
+                        borderRadius: '12px',
+                        border: '2px solid #6c757d',
+                        transition: 'all 0.3s ease'
+                      }}
                     >
                       <i className="fas fa-times me-2"></i>
                       Cancel
                     </button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -284,384 +303,45 @@ export default function Create() {
       </div>
 
       <style jsx>{`
-        /* Floating background shapes */
-        .floating-shape {
-          position: absolute;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.1);
-          animation: float 20s infinite ease-in-out;
+        .form-control:focus {
+          border-color: #667eea !important;
+          box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+          transform: translateY(-2px);
         }
         
-        .shape-1 {
-          width: 80px;
-          height: 80px;
-          top: 10%;
-          left: 10%;
-          animation-delay: 0s;
+        .btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
         }
         
-        .shape-2 {
-          width: 120px;
-          height: 120px;
-          top: 60%;
-          right: 15%;
-          animation-delay: -5s;
-        }
-        
-        .shape-3 {
-          width: 60px;
-          height: 60px;
-          bottom: 20%;
-          left: 20%;
-          animation-delay: -10s;
-        }
-        
-        .shape-4 {
-          width: 100px;
-          height: 100px;
-          top: 20%;
-          right: 25%;
-          animation-delay: -15s;
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          25% { transform: translateY(-20px) rotate(90deg); }
-          50% { transform: translateY(-40px) rotate(180deg); }
-          75% { transform: translateY(-20px) rotate(270deg); }
-        }
-
-        /* Main card styling */
-        .main-card {
-          border-radius: 24px;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          overflow: hidden;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          animation: slideInUp 0.8s ease-out;
-        }
-
-        .main-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        @keyframes slideInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        /* Header styling */
-        .card-header {
-          background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
-          padding: 3rem 2rem;
-          border: none;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .card-header::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-          opacity: 0.3;
-        }
-
-        .header-icon {
-          position: relative;
-          z-index: 2;
-        }
-
-        .icon-circle {
-          width: 80px;
-          height: 80px;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: 0 auto;
-          backdrop-filter: blur(10px);
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          animation: pulse 2s infinite;
-        }
-
-        .icon-circle i {
-          font-size: 2rem;
+        .btn-outline-secondary:hover {
+          transform: translateY(-2px);
+          background-color: #6c757d;
           color: white;
         }
-
-        @keyframes pulse {
-          0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
-          70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
-          100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        
+        .form-check-input:checked {
+          background-color: #667eea;
+          border-color: #667eea;
         }
-
-        .text-white-75 {
-          color: rgba(255, 255, 255, 0.85) !important;
-        }
-
-        /* Modern input styling */
-        .input-group-modern {
-          position: relative;
-          margin-bottom: 0.5rem;
-        }
-
-        .input-icon {
-          position: absolute;
-          left: 20px;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 10;
-          color: #667eea;
-          font-size: 1.1rem;
+        
+        .card {
           transition: all 0.3s ease;
         }
-
-        .modern-input {
-          border-radius: 16px;
-          border: 2px solid #e9ecef;
-          padding-left: 3.5rem !important;
-          height: 3.5rem;
-          background: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(10px);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          font-weight: 500;
+        
+        .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
         }
-
-        .modern-input:focus {
-          border-color: #667eea !important;
-          box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.15) !important;
-          transform: translateY(-2px);
-          background: rgba(255, 255, 255, 1);
-        }
-
-        .modern-input:focus + label,
-        .modern-input:not(:placeholder-shown) + label {
-          color: #667eea !important;
-          font-weight: 600;
-        }
-
-        .modern-input.is-valid {
-          border-color: #28a745;
-          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='m2.3 6.73.94-.94 1.48 1.48L7.6 4.39l.94.94L5.66 8.21z'/%3e%3c/svg%3e");
-          background-repeat: no-repeat;
-          background-position: right 1rem center;
-          background-size: 1rem;
-        }
-
-        .modern-input.is-invalid {
-          border-color: #dc3545;
-        }
-
+        
         .form-floating > label {
           color: #6c757d;
           font-weight: 500;
-          padding-left: 3.5rem;
         }
-
-        /* Error message styling */
-        .error-message {
-          color: #dc3545;
-          font-size: 0.875rem;
-          margin-top: 0.5rem;
-          font-weight: 500;
-          animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-5px); }
-          75% { transform: translateX(5px); }
-        }
-
-        /* Gender section styling */
-        .gender-section {
-          margin-top: 1rem;
-        }
-
-        .section-label {
-          display: block;
-          font-weight: 600;
-          color: #495057;
-          margin-bottom: 1rem;
-          font-size: 1.1rem;
-        }
-
-        .gender-options {
-          display: flex;
-          gap: 1rem;
-        }
-
-        .gender-card {
-          flex: 1;
-          position: relative;
-        }
-
-        .gender-input {
-          position: absolute;
-          opacity: 0;
-          pointer-events: none;
-        }
-
-        .gender-label {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 1.5rem 1rem;
-          border: 2px solid #e9ecef;
-          border-radius: 16px;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          background: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(10px);
-          font-weight: 600;
-          color: #6c757d;
-        }
-
-        .gender-label:hover {
-          border-color: #667eea;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
-        }
-
-        .gender-input:checked + .gender-label {
-          border-color: #667eea;
-          background: linear-gradient(145deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        
+        .form-floating > .form-control:focus ~ label,
+        .form-floating > .form-control:not(:placeholder-shown) ~ label {
           color: #667eea;
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-        }
-
-        .gender-icon {
-          width: 3rem;
-          height: 3rem;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 0.75rem;
-          font-size: 1.25rem;
-          transition: all 0.3s ease;
-        }
-
-        .male-icon {
-          background: linear-gradient(145deg, #3498db, #2980b9);
-          color: white;
-        }
-
-        .female-icon {
-          background: linear-gradient(145deg, #e91e63, #c2185b);
-          color: white;
-        }
-
-        .gender-input:checked + .gender-label .gender-icon {
-          transform: scale(1.1);
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Button styling */
-        .action-buttons {
-          display: flex;
-          gap: 1rem;
-        }
-
-        .btn-modern {
-          border: none;
-          border-radius: 16px;
-          padding: 1rem 2rem;
-          font-weight: 600;
-          font-size: 1.1rem;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 3.5rem;
-        }
-
-        .btn-primary-modern {
-          flex: 2;
-          background: linear-gradient(145deg, #667eea, #764ba2);
-          color: white;
-          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-primary-modern:hover:not(:disabled) {
-          transform: translateY(-3px);
-          box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary-modern:disabled {
-          opacity: 0.7;
-          cursor: not-allowed;
-        }
-
-        .btn-secondary-modern {
-          flex: 1;
-          background: rgba(108, 117, 125, 0.1);
-          color: #6c757d;
-          border: 2px solid #e9ecef;
-          backdrop-filter: blur(10px);
-        }
-
-        .btn-secondary-modern:hover {
-          background: #6c757d;
-          color: white;
-          transform: translateY(-3px);
-          box-shadow: 0 8px 25px rgba(108, 117, 125, 0.3);
-        }
-
-        /* Spinner styling */
-        .spinner-modern {
-          width: 1.2rem;
-          height: 1.2rem;
-          border: 2px solid transparent;
-          border-top: 2px solid currentColor;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-          .gender-options {
-            flex-direction: column;
-          }
-          
-          .action-buttons {
-            flex-direction: column;
-          }
-          
-          .btn-primary-modern,
-          .btn-secondary-modern {
-            flex: 1;
-          }
-          
-          .card-body {
-            padding: 2rem !important;
-          }
-          
-          .card-header {
-            padding: 2rem 1.5rem !important;
-          }
         }
       `}</style>
     </div>
