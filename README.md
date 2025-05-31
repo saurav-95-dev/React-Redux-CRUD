@@ -17,16 +17,6 @@
 ## --> React-revision concepts learnt (For the months of May)
 
 
-### DSA :
-Month - 1 , May - 18 , 2025.
-
---> Linked-List .
---> OOPS Concepts.
---> React-Redux CRUD Application 
-
-
-
-
 
 
 
