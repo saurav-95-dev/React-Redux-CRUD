@@ -586,7 +586,7 @@ export default function Read() {
                                                         }}
                                                         onMouseEnter={(e) => {
                                                             e.target.style.transform = 'translateY(-2px)';
-                                                            e.target.style.boxShadow = '0 10px 25px rgba(239, 68, 68, 0.4)';
+                                                            e.target.style.boxShadow = '0 10px 25px rgba(240, 96, 96, 0.4)';
                                                         }}
                                                         onMouseLeave={(e) => {
                                                             e.target.style.transform = 'translateY(0)';
