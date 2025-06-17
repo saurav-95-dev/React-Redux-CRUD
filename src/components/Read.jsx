@@ -594,7 +594,7 @@ export default function Read() {
                                                         }}
                                                     >
                                                         <span style={{ fontSize: '1.1rem' }}>🗑️</span>
-                                                        Delete
+                                                        Remove
                                                     </button>
                                                 </div>
                                             </div>
