@@ -46,7 +46,7 @@ export default function Read() {
                         100% { background-position: 200% 0; }
                     }
                     .loading-bg {
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+                        background: linear-gradient(135deg, #667eea 0%,rgb(148, 98, 197) 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
                         background-size: 400% 400%;
                         animation: gradient 15s ease infinite;
                     }
