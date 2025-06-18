@@ -442,7 +442,7 @@ export default function Read() {
                                                 justifyContent: 'center',
                                                 width: '80px',
                                                 height: '80px',
-                                                background: `linear-gradient(135deg, ${user.gender === 'Male' ? '#4facfe 0%, #00f2fe 100%' : '#f093fb 0%, #f5576c 100%'})`,
+                                                background: `linear-gradient(135deg, ${user.gender === 'Male' ? '#4facfe 0%,rgb(119, 235, 241) 100%' : '#f093fb 0%,rgb(241, 110, 127) 100%'})`,
                                                 borderRadius: '50%',
                                                 margin: '0 auto 1.5rem auto',
                                                 position: 'relative'
@@ -462,7 +462,7 @@ export default function Read() {
                                                 <h3 style={{ 
                                                     fontSize: '1.4rem', 
                                                     fontWeight: '800', 
-                                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                                    background: 'linear-gradient(135deg,rgb(112, 136rgb(147, 96, 198)%, #764ba2 100%)',
                                                     WebkitBackgroundClip: 'text',
                                                     WebkitTextFillColor: 'transparent',
                                                     marginBottom: '1rem'
@@ -476,7 +476,7 @@ export default function Read() {
                                                         justifyContent: 'center', 
                                                         gap: '0.5rem', 
                                                         margin: '0.8rem 0',
-                                                        background: 'rgba(59, 130, 246, 0.1)',
+                                                        background: 'rgba(92, 148, 240, 0.1)',
                                                         padding: '0.5rem',
                                                         borderRadius: '10px'
                                                     }}>
