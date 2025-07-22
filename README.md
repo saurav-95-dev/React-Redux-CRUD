@@ -12,8 +12,6 @@ Project :
 
 Technologies :
 
-
-
 Description :
 
 Architecture Deisgn :
