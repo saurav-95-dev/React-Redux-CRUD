@@ -12,6 +12,4 @@ Description :
 
 Architecture Deisgn :
 
-link :
-
 
