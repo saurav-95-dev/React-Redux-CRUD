@@ -10,6 +10,6 @@ Technologies :
 
 Description :
 
-Architecture Deisgn :
+
 
 
