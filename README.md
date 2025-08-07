@@ -5,7 +5,3 @@
 
 
 Project :
-
-Technologies :
-
-
