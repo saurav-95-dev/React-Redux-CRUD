@@ -8,8 +8,4 @@ Project :
 
 Technologies :
 
-Description :
-
-
-
 
